@@ -81,12 +81,11 @@
       $('#btn_vote').click(function () {
 
         var jsonData = {"data": "123456"};
-        alert(JSON.stringify(jsonData));
 
         $.ajax({
           url:      'user_vote/',
           async:    true,
-          dataType: "application/json",
+          dataType: "json",
           data:     jsonData,
           type:     'POST',
           timeout:  12000, //12s time out
