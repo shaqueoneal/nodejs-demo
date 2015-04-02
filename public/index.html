@@ -29,7 +29,7 @@
 			<h1 class="center-text">Image Gallery</h1>
 			<h2 class="center-text">Flip Turn is free HTML5 responsive <a rel="nofollow" href="http://www.cssmoban.com">website template</a> by templatemo. Credit goes to <a rel="nofollow" href="#">Unsplash</a> for images used in this template. Morbi hendrerit lacinia magna et tempus. Integer placerat sed nulla non tincidunt.</h2>
 		</header>
-		<div id="portfolio-content" class="center-text">
+<!-- 		<div id="portfolio-content" class="center-text">
 			<div class="portfolio-page" id="page-1">
 				<div class="portfolio-group">
 					<a class="portfolio-item" href="images/1-large.jpg">
@@ -277,17 +277,18 @@
 					</a>				
 				</div>
 			</div> <!-- page 3 -->		
-			<div class="pagination">
+			<!-- <div class="pagination">
 				<ul class="nav">
 					<li class="active">1</li>
 					<li>2</li>
 					<li>3</li>
 				</ul>
 			</div>
-		</div>
+		</div> -->
 	</div>	<!-- /.content-container -->	
     
 		<footer>
+			<button id='some-button'>some-button</button>
 			<p>Copyright &copy; 2015 by zhaoshenglu 07042 www.h3c.com</p>
 <!-- 			<div class="social right">
 				<a href="#"><i class="fa fa-facebook"></i></a>
@@ -306,9 +307,96 @@
 	<script type="text/javascript" src="js/templatemo_script.js"></script>
 	<script type="text/javascript">
 		$(function () {
+			var candidates = [
+			{
+				img: "images/1-small.jpg",
+				title: "Wavy Road",
+				url: "images/1-large.jpg",
+				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
+
+			},
+			{
+				img: "images/2-small.jpg",
+				title: "Rocky Mountain",
+				url: "images/2-large.jpg",
+				desc:"Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt.",
+
+			},
+			{
+				img: "images/3-small.jpg",
+				title: "Wavy Road",
+				url: "images/3-large.jpg",
+				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
+
+			},
+			{
+				img: "images/4-small.jpg",
+				title: "Wavy Road",
+				url: "images/4-large.jpg",
+				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
+
+			},
+			{
+				img: "images/5-small.jpg",
+				title: "Wavy Road",
+				url: "images/5-large.jpg",
+				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
+
+			},						
+			{
+				img: "images/6-small.jpg",
+				title: "Wavy Road",
+				url: "images/6-large.jpg",
+				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
+
+			},			
+			{
+				img: "images/7-small.jpg",
+				title: "Wavy Road",
+				url: "images/7-large.jpg",
+				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
+
+			},
+			{
+				img: "images/8-small.jpg",
+				title: "Wavy Road",
+				url: "images/8-large.jpg",
+				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
+
+			},
+			];
 			$('.pagination li').click(changePage);
+
+
+$('#some-button').magnificPopup({
+    items: [
+      {
+        src: 'images/8-small.jpg'
+      },
+      {
+        src: 'http://baidu.com',
+        type: 'iframe' // this overrides default type
+      },
+      {
+        src: $('<div>Dynamically created element</div>'), // Dynamically created element
+        type: 'inline'
+      },
+      {
+        src: '<div>HTML string</div>',
+        type: 'inline'
+      },
+      {
+        src: '#my-popup', // CSS selector of an element on page that should be used as a popup
+        type: 'inline'
+      }
+    ],
+    gallery: {
+      enabled: true
+    },
+    type: 'image' // this is default type
+});
 			$('.portfolio-item').magnificPopup({ 
-				type: 'image',
+				type: 'iframe',
 				gallery:{
 					enabled:true
 				}
