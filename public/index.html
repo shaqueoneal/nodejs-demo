@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-	<title>Flip Turn Template </title>
+	<title>投啊</title>
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<meta charset="UTF-8">
@@ -14,21 +14,21 @@
 <body>
 	<div class="main-container">
 		<nav class="main-nav">
-			<div id="logo" class="left"><a href="#">Voting me!</a></div>
+			<div id="logo" class="left"><a href="#">投啊</a></div>
 			<ul class="nav right center-text">
-				<li class="btn active">Home</li>
-				<li class="btn"><a href="about.html">About</a></li>
-				<li class="btn"><a href="awards.html">Awards</a></li>				
-				<li class="btn"><a href="contact.html">Contact</a></li>
+				<li class="btn active">首页</li>
+				<li class="btn"><a href="about.html">关于</a></li>
+				<li class="btn"><a href="awards.html">结果</a></li>				
+				<li class="btn"><a href="contact.html">反馈</a></li>
 				<li class="btn"><a rel="nofollow" href="#">External</a></li>
 			</ul>
 		</nav>
-        <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
 		<div class="content-container">
 			<header>
-			<h1 class="center-text">Image Gallery</h1>
-			<h2 class="center-text">Flip Turn is free HTML5 responsive <a rel="nofollow" href="http://www.cssmoban.com">website template</a> by templatemo. Credit goes to <a rel="nofollow" href="#">Unsplash</a> for images used in this template. Morbi hendrerit lacinia magna et tempus. Integer placerat sed nulla non tincidunt.</h2>
+			<h1 class="center-text">UIS 首页评选</h1>
+			<h2 class="center-text">UIS 首页评选，每人限投一票，把选票投给您最满意的作品吧！</h2>
 		</header>
+
 		<div id="portfolio-content" class="center-text">
 			<div class="portfolio-page" id="page-1">
 				<div class="portfolio-group">
@@ -36,10 +36,12 @@
 						<img src="images/1-small.jpg" alt="image 1">
 						<div class="detail">
 							<h3>Wavy Road</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.</p>
-							<span class="btn">View</span>
+							<p>Duis ac </p>
+													<span class="btn" id="btn_vote">投票</span><br/>
+						<span class="btn" id="btn_view">查看原网页</span>	
 						</div>
-					</a>				
+
+					</a>
 				</div>
 				<div class="portfolio-group">
 					<a class="portfolio-item" href="images/2-large.jpg">
@@ -285,11 +287,11 @@
 				</ul>
 			</div>
 		</div> 
-	</div>	<!-- /.content-container -->	
+		</div>	<!-- /.content-container -->	
     
 		<footer>
 			<button id='some-button'>some-button</button>
-			<p>Copyright &copy; 2015 by zhaoshenglu 07042 www.h3c.com</p>
+			<p>Copyright &copy; 2015 by zhaoshenglu 07042 </p>
 <!-- 			<div class="social right">
 				<a href="#"><i class="fa fa-facebook"></i></a>
 				<a href="#"><i class="fa fa-twitter"></i></a>
@@ -305,102 +307,63 @@
 	<script type="text/javascript" src="js/modernizr.2.5.3.min.js"></script>
 	<script type="text/javascript" src="js/jquery.magnific-popup.min.js"></script> 
 	<script type="text/javascript" src="js/templatemo_script.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.cookie.js"></script>
+
 	<script type="text/javascript">
 		$(function () {
-			var candidates = [
-			{
-				img: "images/1-small.jpg",
-				title: "Wavy Road",
-				url: "images/1-large.jpg",
-				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
-
-			},
-			{
-				img: "images/2-small.jpg",
-				title: "Rocky Mountain",
-				url: "images/2-large.jpg",
-				desc:"Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt.",
-
-			},
-			{
-				img: "images/3-small.jpg",
-				title: "Wavy Road",
-				url: "images/3-large.jpg",
-				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
-
-			},
-			{
-				img: "images/4-small.jpg",
-				title: "Wavy Road",
-				url: "images/4-large.jpg",
-				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
-
-			},
-			{
-				img: "images/5-small.jpg",
-				title: "Wavy Road",
-				url: "images/5-large.jpg",
-				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
-
-			},						
-			{
-				img: "images/6-small.jpg",
-				title: "Wavy Road",
-				url: "images/6-large.jpg",
-				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
-
-			},			
-			{
-				img: "images/7-small.jpg",
-				title: "Wavy Road",
-				url: "images/7-large.jpg",
-				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
-
-			},
-			{
-				img: "images/8-small.jpg",
-				title: "Wavy Road",
-				url: "images/8-large.jpg",
-				desc:"Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.",
-
-			},
-			];
 			$('.pagination li').click(changePage);
-
-
-$('#some-button').magnificPopup({
-    items: [
-      {
-        src: 'images/8-small.jpg'
-      },
-      {
-        src: 'http://www.163.com',
-        type: 'iframe' // this overrides default type
-      },
-      {
-        src: $('<div><iframe class="origin" src="http://www.h3c.com"></iframe></div>'), // Dynamically created element
-        type: 'inline'
-      },
-      {
-        src: '<div>HTML string</div>',
-        type: 'inline'
-      },
-      {
-        src: '#my-popup', // CSS selector of an element on page that should be used as a popup
-        type: 'inline'
-      }
-    ],
-    gallery: {
-      enabled: true
-    },
-    type: 'image' // this is default type
-});
 			$('.portfolio-item').magnificPopup({ 
 				type: 'iframe',
 				gallery:{
 					enabled:true
 				}
 			});
+
+			$('#btn_vote').click(function(e){		
+				var jsonData = {
+					"theme":    "uis",
+					"no":       "2",
+					"title":    "200px",
+					"comments": "test"
+				};				
+
+				var jsonStr = JSON.stringify(jsonData);
+
+				if ($.cookie('vote')) {
+					var cookieData = JSON.parse($.cookie('vote'));
+
+					if (jsonData.no != cookieData.no) {
+						if (!confirm("您已经投过票了，重新投票的话上次投票会作废，确定要重新投票吗？")){
+							return false;
+						};
+					}
+				}
+
+		        $.ajax({
+		          url:      'user_vote/',
+		          async:    true,
+		          dataType: "json",
+		          data:     jsonData,
+		          type:     'POST',
+		          timeout:  12000, //12s time out
+		          success:  function (data) {
+		          	console.log(data);
+		        	alert("您投了 " + jsonData.no + "# 作品" + (jsonData.title ? " :《" + jsonData.title + "》":"") + "一票，感谢您的参与，现在您可以查看投票结果！");
+
+		        	$.cookie('vote', jsonStr);
+		          },
+		          error: function (xhr, status, error) {
+		          	alert("通信故障，请稍候再试");
+		            console.log('Error: ' + error.message);
+		            
+		          },
+		        });
+
+
+				return false;
+
+			});
+
 		});
 	</script>	
 </body>
