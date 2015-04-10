@@ -435,8 +435,12 @@
 	      ctx = $("#cvs_votes_pie").get(0).getContext("2d");
 		  new Chart(ctx).Doughnut(portCounts, {responsive: true, UserSet: true, percentageInnerCutout: 0, tip:'%'});
 
+
 			$('#btn_origin').click(function(e){
-				popWin.showWin("1200","750","通用的iframe弹层插件","http://10.99.73.184:7042/index-200px.html");
+				var height =  (768 < screen.availHeight) ? 768 : (screen.availHeight - 120);
+				var width = height * 16 / 9;
+
+				popWin.showWin(width, height ,"通用的iframe弹层插件","http://10.99.73.184:7042/index-200px.html");
 			});
 
 			$('#btn_vote').click(function(e){		
