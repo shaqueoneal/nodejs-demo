@@ -84,6 +84,18 @@
 					</div>
 				</div>
 			</div>
+			<header>
+				<h3>投票结果</h3>
+			</header>
+			<div class="row well">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<canvas id="cvs_votes" height="220"></canvas>
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+
+
 		</div>
 
 
@@ -366,6 +378,7 @@
 	<script type="text/javascript" src="js/templatemo_script.js"></script>
 	<script type="text/javascript" src="javascripts/jquery.cookie.js"></script>
 	<script type="text/javascript" src="javascripts/popwin.js"></script>
+	<script type="text/javascript" src="javascripts/Chart.js"></script>
 
 	<script type="text/javascript">
 		$(function () {
@@ -376,6 +389,25 @@
 			// 		enabled:true
 			// 	}
 			// });
+
+	      var ctx = $("#cvs_votes").get(0).getContext("2d");
+	      
+	      var data = {
+	        labels: ["VM1", "VM2", "VM3"],
+	        datasets: [
+	        {
+	          label: "My First dataset",
+	          fillColor: "#5cb85c",
+	          strokeColor: "rgba(220,220,220,0.8)",
+	          highlightFill: "#5AD3D1",
+	          highlightStroke: "rgba(220,220,220,1)",
+	          data: [80, 70, 60]
+	        },
+	        ]
+	      };
+
+	      new Chart(ctx).Bar(data, {responsive: true, barValueSpacing: 30, scaleFontColor: "#222",});
+
 
 			$('#btn_origin').click(function(e){
 				popWin.showWin("1200","750","通用的iframe弹层插件","http://10.99.73.184:7042/index-200px.html");
