@@ -88,11 +88,14 @@
 				<h3>投票结果</h3>
 			</header>
 			<div class="row well">
-				<div class="col-md-4"></div>
+				<div class="col-md-2"></div>
 				<div class="col-md-4">
-					<canvas id="cvs_votes" height="220"></canvas>
+					<canvas id="cvs_votes_bar" height="220"></canvas>
+				</div>				
+				<div class="col-md-4">
+					<canvas id="cvs_votes_pie" height="220"></canvas>
 				</div>
-				<div class="col-md-4"></div>
+				<div class="col-md-2"></div>
 			</div>
 
 
@@ -390,7 +393,7 @@
 			// 	}
 			// });
 
-	      var ctx = $("#cvs_votes").get(0).getContext("2d");
+	      var ctx = $("#cvs_votes_bar").get(0).getContext("2d");
 	      
 	      var data = {
 	        labels: ["VM1", "VM2", "VM3"],
@@ -408,6 +411,29 @@
 
 	      new Chart(ctx).Bar(data, {responsive: true, barValueSpacing: 30, scaleFontColor: "#222",});
 
+	      var portCounts = [
+	        {
+	          value:     100, 
+	          label:     'GE',
+	          color:     "red",
+	          highlight: "#5AD3D1",
+	        },
+	        {
+	          value:     200, 
+	          label:     'XGE',
+	          color:     "green",
+	          highlight: "#5AD3D1",
+	        },
+	        {
+	          value:     40, 
+	          label:     'FGE',
+	          color:     "yellow",
+	          highlight: "#5AD3D1",
+	        },
+	      ];
+
+	      ctx = $("#cvs_votes_pie").get(0).getContext("2d");
+		  new Chart(ctx).Doughnut(portCounts, {responsive: true, UserSet: true, percentageInnerCutout: 0, tip:'%'});
 
 			$('#btn_origin').click(function(e){
 				popWin.showWin("1200","750","通用的iframe弹层插件","http://10.99.73.184:7042/index-200px.html");
