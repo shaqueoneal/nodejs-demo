@@ -9,27 +9,85 @@
 	
 	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="css/magnific-popup.css" rel="stylesheet"> 
-	<link href="css/templatemo_style.css" rel="stylesheet" type="text/css">	
-</head>
-<body>
-	<div class="main-container">
-		<nav class="main-nav">
-			<div id="logo" class="left"><a href="#">投啊</a></div>
-			<ul class="nav right center-text">
-				<li class="btn active">首页</li>
-				<li class="btn"><a href="about.html">关于</a></li>
-				<li class="btn"><a href="awards.html">结果</a></li>				
-				<li class="btn"><a href="contact.html">反馈</a></li>
-				<li class="btn"><a rel="nofollow" href="#">External</a></li>
-			</ul>
-		</nav>
-		<div class="content-container">
-			<header>
-			<h1 class="center-text">UIS 首页评选</h1>
-			<h2 class="center-text">UIS 首页评选，每人限投一票，把选票投给您最满意的作品吧！</h2>
-		</header>
+	<!-- <link href="css/templatemo_style.css" rel="stylesheet" type="text/css">	 -->
+	<link href="stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
 
-		<div id="portfolio-content" class="center-text">
+	<style type="text/css">
+		iframe.full{
+			width:1440px;
+			height:900px;
+			-webkit-transform:scale(0.2);
+			-webkit-transform-origin:left top;
+		}
+
+	</style>	
+</head>
+<body calss="landing">
+	<div class="well">	
+		<h1>投啊<small>——大家都来投票吧！</small></h1>
+		<h3 class="center-text">UIS 首页评选，每人限投一票，把选票投给您最满意的作品吧！</h3>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a href="#">首页</a></li>
+				<li role="presentation"><a href="#">结果</a></li>
+				<li role="presentation"><a href="#">关于</a></li>
+			</ul>
+		</div>
+	</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-200px.html" scrolling="no"></iframe>
+					</div>
+					<div>
+						<button class="btn btn-success" id="btn_vote">投他一票</button>
+						<button class="btn btn-primary" id="btn_origin">查看原稿</button>
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-160px.html" scrolling="no"></iframe>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-120px.html" scrolling="no"></iframe>
+					</div> 
+				</div>
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-100px.html" scrolling="no"></iframe>
+					</div> 
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="row">
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-200px.html" scrolling="no"></iframe>
+					</div>
+					<div>
+						<button class="btn btn-success" id="btn_vote">投他一票</button>
+						<button class="btn btn-primary" id="btn_origin">查看原稿</button>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-160px.html" scrolling="no"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+<!-- 		<div id="portfolio-content" class="center-text">
 			<div class="portfolio-page" id="page-1">
 				<div class="portfolio-group">
 					<a class="portfolio-item" href="images/1-large.jpg">
@@ -37,10 +95,9 @@
 						<div class="detail">
 							<h3>Wavy Road</h3>
 							<p>Duis ac </p>
-													<span class="btn" id="btn_vote">投票</span><br/>
-						<span class="btn" id="btn_view">查看原网页</span>	
+							<span class="btn" id="btn_vote">投票</span><br/>
+							<span class="btn" id="btn_view">查看原网页</span>	
 						</div>
-
 					</a>
 				</div>
 				<div class="portfolio-group">
@@ -279,16 +336,16 @@
 					</a>				
 				</div>
 			</div> <!-- page 3	-->	
-			<div class="pagination">
+<!-- 			<div class="pagination">
 				<ul class="nav">
 					<li class="active">1</li>
 					<li>2</li>
 					<li>3</li>
 				</ul>
 			</div>
-		</div> 
-		</div>	<!-- /.content-container -->	
-    
+		</div>  
+		</div> -->	<!-- /.content-container -->	
+    <div>
 		<footer>
 			<button id='some-button'>some-button</button>
 			<p>Copyright &copy; 2015 by zhaoshenglu 07042 </p>
@@ -308,15 +365,20 @@
 	<script type="text/javascript" src="js/jquery.magnific-popup.min.js"></script> 
 	<script type="text/javascript" src="js/templatemo_script.js"></script>
 	<script type="text/javascript" src="javascripts/jquery.cookie.js"></script>
+	<script type="text/javascript" src="javascripts/popwin.js"></script>
 
 	<script type="text/javascript">
 		$(function () {
-			$('.pagination li').click(changePage);
-			$('.portfolio-item').magnificPopup({ 
-				type: 'iframe',
-				gallery:{
-					enabled:true
-				}
+			// $('.pagination li').click(changePage);
+			// $('.portfolio-item').magnificPopup({ 
+			// 	type: 'iframe',
+			// 	gallery:{
+			// 		enabled:true
+			// 	}
+			// });
+
+			$('#btn_origin').click(function(e){
+				popWin.showWin("1200","750","通用的iframe弹层插件","http://10.99.73.184:7042/index-200px.html");
 			});
 
 			$('#btn_vote').click(function(e){		
