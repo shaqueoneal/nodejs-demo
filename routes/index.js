@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost/user_vote');  // 连接数据库
 router.get('/', function(req, res, next) {   
 	console.log(process.cwd());
 
-  var user = {
+  var userObj = {
     id: req.ip,
     name : req.ip,
     ip : req.ip,
@@ -25,15 +25,16 @@ router.get('/', function(req, res, next) {
     password : ""
   };
 
-  User.add(user, function (err, doc) {
+  User.add(userObj, function (err, doc) {
     if (err) {
       return;
     }
   });
 
-  var theme = {
+  var themeObj = {
     id: 'uis',
     name: 'UIS首页',
+    candidates: 6, 
     begin: Date.now(),  
     end: new Date(2015, 3, 30), //lasts 10 days 
     votesPerUser: 1, 
@@ -41,10 +42,16 @@ router.get('/', function(req, res, next) {
     maxVotes: -1 
   };
 
-  Theme.add(theme, function (err, doc) {
+  Theme.add(themeObj, function (err, doc) {
     if (err) {
       return;
     }
+  });
+
+  var theme = new Theme(themeObj);  //this is theme doc
+
+  theme.countVotes(function(voteRecords) {
+    console.log(voteRecords);
   });
 
   next();	
@@ -64,7 +71,7 @@ router.get('/user_vote', function(req, res, next) {
 router.post('/user_vote', function(req, res, next) {
   //console.log(app);   this will be {}!!
 
-	 console.log(req.body);
+	 // console.log(req.body);
 
  //  var user = new User({
  //    id: req.ip,
