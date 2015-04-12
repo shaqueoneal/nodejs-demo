@@ -26,6 +26,7 @@
 	<div class="well">	
 		<h1>投啊<small>——大家都来投票吧！</small></h1>
 		<h3 class="center-text">UIS 首页评选，每人限投一票，把选票投给您最满意的作品吧！</h3>
+		<button class="btn btn-primary btn-lg" id="btn_enter">点击进入</button>
 	</div>
 
 	<div class="container">
@@ -435,6 +436,29 @@
 	      ctx = $("#cvs_votes_pie").get(0).getContext("2d");
 		  new Chart(ctx).Doughnut(portCounts, {responsive: true, UserSet: true, percentageInnerCutout: 0, tip:'%'});
 
+		  $('#btn_enter').click(function(e){
+		  		var jsonData = {
+					"theme":    "uis",
+				};		
+
+		        $.ajax({
+		          url:      'user_vote/',
+		          async:    true,
+		          dataType: "json",
+		          data:     jsonData,
+		          type:     'GET',
+		          timeout:  12000, //12s time out
+		          success:  function (data) {
+		          	//show theme
+		          	// alert(data);
+		          },
+		          error: function (xhr, status, error) {
+		          	alert("通信故障，请稍候再试");
+		            console.log('Error: ' + error.message);
+		            
+		          },
+		        });
+		    });
 
 			$('#btn_origin').click(function(e){
 				var height =  (768 < screen.availHeight) ? 768 : (screen.availHeight - 120);
@@ -446,7 +470,7 @@
 			$('#btn_vote').click(function(e){		
 				var jsonData = {
 					"theme":    "uis",
-					"no":       "2",
+					"no":       "1",
 					"title":    "200px",
 					"comments": "test"
 				};				

@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var models = require('../models') // 导入自定义组件 
+var models = require('../models') 
 
-var User = models.User;  // 使用User模型，对应的users表 
-var Theme = models.Theme;  // 使用Theme模型，对应的Theme表 
-var Vote = models.Vote;  // 使用Vote模型，对应的vote表 
+var User = models.User;
+var Theme = models.Theme;
+var Vote = models.Vote;
 
-mongoose.connect('mongodb://localhost/user_vote');  // 连接数据库
+mongoose.connect('mongodb://localhost/user_vote');
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -61,49 +61,70 @@ router.get('/', function(req, res, next) {
 //   res.sendFile('.public/index.html'); 
 // });
 
+var g_candidates = [
+  {
+    id: 1,
+    themeId: "uis",
+    name: "有容乃大",
+    author: "zhaoshenglu",
+    url: "http://10.99.73.184:7042/index-200px.html"
+  },
+  {
+    id: 2,
+    themeId: "uis",
+    name: "中庸之道",
+    author: "zhaoshenglu",
+    url: "http://10.99.73.184:7042/index-160px.html"
+  },
+  {
+    id: 3,
+    themeId: "uis",
+    name: "走马观花",
+    author: "zhaoshenglu",
+    url: "http://10.99.73.184:7042/index-120px.html"
+  },
+  {
+    id: 4,
+    themeId: "uis",
+    name: "小巧玲珑",
+    author: "zhaoshenglu",
+    url: "http://10.99.73.184:7042/index-120px.html"
+  },
+  {
+    id: 5,
+    themeId: "uis",
+    name: "顾名思义",
+    author: "zhaoshenglu",
+    url: "http://10.99.73.184:7042/index.html"
+  },
+  {
+    id: 6,
+    themeId: "uis",
+    name: "人不如故",
+    author: "zhaoshenglu",
+    url: "http://10.99.73.184:7042/index-old.html"
+  },
+];
+
 /* GET user vote page. */
 router.get('/user_vote', function(req, res, next) {
-  res.render('user_vote', { title: 'user_vote' });
-});
+  // res.render('user_vote', { title: 'user_vote' });
 
+  if (g_candidates[0].themeId == req.query.theme) {
+    res.type('json');
+    res.send(g_candidates);
+  }
+
+});
 
 /* POST user vote . */
 router.post('/user_vote', function(req, res, next) {
-  //console.log(app);   this will be {}!!
-
-	 // console.log(req.body);
-
- //  var user = new User({
- //    id: req.ip,
- //    name : req.ip,
- //    ip : req.ip,
- //    email : "",
- //    password : ""
- //  });
-
- //  console.log(user);
-
- //      user.add();
-
- //      console.log(req.body);
-
-      // user.vote(req.body.theme, req.body.no, "", function () {
-        // res.type('json');
-        // res.send({
-        //   "theme":    req.body.theme,
-        //   "no":       req.body.no,
-        //   "comments": ""
-        // });          
-      // });   
-
     var vote = {
       id: req.ip + req.body.theme,
       userId: req.ip,
       themeId: req.body.theme,  
       votes: [{no: req.body.no, date: new Date(), comments: req.body.comments}],
     };
-
-
 
     Vote.set(vote, function (err, doc) {
       var ret = 'success';

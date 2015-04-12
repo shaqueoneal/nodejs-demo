@@ -19,7 +19,7 @@ var _Vote = new Schema({
 	votes: [{no: String, date: Date, comments: String}],	//no means candidate's id begins with 1
 });
 
-// theme is something can be voted
+// theme is a show where works can be voted
 var _Theme = new Schema({
 	id: String,
 	name: String,
@@ -31,8 +31,15 @@ var _Theme = new Schema({
 	maxVotes: String,	// max votes  -1: unlimited	
 });
 
-var User = mongoose.model('User', _User);
-var Vote = mongoose.model('Vote', _Vote);
+// candidate is the work in a theme
+var _Candidate = new Schema({
+	id: String,		//begins with 1
+	themeId: String,
+	name: String,
+	author: String,	
+	url: String,	//where to access *
+	description: String,
+});
 
 _Theme.methods.countVotes = function (cb) {
 	var voteRecords = new Array(this.candidates);
@@ -40,7 +47,8 @@ _Theme.methods.countVotes = function (cb) {
 		voteRecords[i] = 0;
 	};
 
-	Vote.find({themeId: this.id}, function (err, userVotes) {
+	var VoteTemp = mongoose.model('Vote', _Vote);
+	VoteTemp.find({themeId: this.id}, function (err, userVotes) {
 		if (userVotes.length > 0) {			
 			userVotes.forEach(function (votes) {	
 				votes.votes.forEach(function (vote) {	
@@ -56,7 +64,10 @@ _Theme.methods.countVotes = function (cb) {
 	});
 }
 
+var User = mongoose.model('User', _User);
+var Vote = mongoose.model('Vote', _Vote);
 var Theme = mongoose.model('Theme', _Theme);
+var Candidate = mongoose.model('Candidate', _Candidate);
 
 function add(entity, cb) {
 	if (!entity.id) {
@@ -137,10 +148,10 @@ function set(entity, cb) {
 	});
 }
 
-Vote.add = Theme.add = User.add = add;
-Vote.del = Theme.del = User.del = del;
-Vote.get = Theme.get = User.get = get;
-Vote.set = Theme.set = User.set = set;
+Candidate.add = Vote.add = Theme.add = User.add = add;
+Candidate.del = Vote.del = Theme.del = User.del = del;
+Candidate.get = Vote.get = Theme.get = User.get = get;
+Candidate.set = Vote.set = Theme.set = User.set = set;
 
 // export them
 exports.User = User;
