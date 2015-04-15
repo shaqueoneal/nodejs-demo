@@ -475,24 +475,12 @@
 		  $('#btn_enter').click(function(e){
 		  		var jsonData = {
 					"theme":    "uis",
-				};		
+				};	
 
-		        $.ajax({
-		          url:      'user_vote/',
-		          async:    true,
-		          dataType: "json",
-		          data:     jsonData,
-		          type:     'GET',
-		          timeout:  12000, //12s time out
-		          success:  function (data) {
-		          	//show theme
-		          	// alert(data);
-		          },
-		          error: function (xhr, status, error) {
-		          	alert("通信故障，请稍候再试");
-		            console.log('Error: ' + error.message);
-		            
-		          },
+				sendJsonData('user_vote/', 'GET', jsonData, function (data) {
+		          	console.log(data);
+		        	
+		        	$.cookie('vote', jsonStr);
 		        });
 		    });
 
@@ -523,26 +511,12 @@
 					}
 				}
 
-		        $.ajax({
-		          url:      'user_vote/',
-		          async:    true,
-		          dataType: "json",
-		          data:     jsonData,
-		          type:     'POST',
-		          timeout:  12000, //12s time out
-		          success:  function (data) {
+				sendJsonData('user_vote/', 'POST', jsonData, function (data) {
 		          	console.log(data);
 		        	alert("您投了 " + jsonData.no + "# 作品" + (jsonData.title ? " :《" + jsonData.title + "》":"") + "一票，感谢您的参与，现在您可以查看投票结果！");
 
 		        	$.cookie('vote', jsonStr);
-		          },
-		          error: function (xhr, status, error) {
-		          	alert("通信故障，请稍候再试");
-		            console.log('Error: ' + error.message);
-		            
-		          },
 		        });
-
 
 				return false;
 

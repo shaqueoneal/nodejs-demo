@@ -32,14 +32,16 @@ router.get('/', function(req, res, next) {
   });
 
   var themeObj = {
-    id: 'uis',
+    id: 1,
     name: 'UIS首页',
     candidates: 6, 
     begin: Date.now(),  
-    end: new Date(2015, 3, 30), //lasts 10 days 
+    end: new Date(2015, 4, 30), //lasts 10 days 
     votesPerUser: 1, 
     maxUser: -1,  
-    maxVotes: -1 
+    maxVotes: -1, 
+    description: 'UIS 登陆页面评选 火热进行中，动动您的手指，选出心中所爱吧！ \n \
+                 无需注册，直接点击下方按钮参与投票',
   };
 
   Theme.add(themeObj, function (err, doc) {
@@ -54,7 +56,12 @@ router.get('/', function(req, res, next) {
     console.log(voteRecords);
   });
 
-  next();	
+  console.log(req.query);
+  if ("all" == req.query.themes) {
+    res.send(themeObj);
+  }
+
+  // next();	
 });
 
 // router.get('/', function(req, res, next) { 

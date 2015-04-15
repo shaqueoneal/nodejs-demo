@@ -29,6 +29,8 @@ var _Theme = new Schema({
 	votesPerUser: String, //votes a user can have
 	maxUser: String,	// max users  -1: unlimited
 	maxVotes: String,	// max votes  -1: unlimited	
+	description: String,	// slogan poster etc.
+	imgUrl: String,		// advtise img
 });
 
 // candidate is the work in a theme

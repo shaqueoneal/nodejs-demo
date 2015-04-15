@@ -16,7 +16,46 @@ jQuery(document).ready(function($){
 /*------------------------------------------------------------------------*/
 /*	1.	Plugins Init
 /*------------------------------------------------------------------------*/
+	/*-----------GET THEMES ON VOTING-------------*/
+  	var jsonData = {
+		"themes":    "all",
+	};
 
+	sendJsonData('/', 'GET', jsonData, function (data) {
+      	console.log(data);
+
+	// var slide = $('<li><div class="flex-caption section-overlay slide-caption"> \
+	// 	    <div class="container"> \
+	// 		<div class="row"> \
+	// 		    <div class="col-md-12"> \
+	// 		    <h2>'
+	// 			+ data.description + 
+	// 			'</h2> <a class="slide-button" id="btn-theme-' + data.id + '">' 
+	// 			+ data.name + '评选</a> </div> \
+			    
+	// 		</div> \
+	// 	    </div> \		     
+	// 	</div> <img src="images/slides/slide1.jpg" alt="slide-01"> </li>');
+
+	var slide = $(' <li> '+
+'			<div class="flex-caption section-overlay slide-caption">'+
+'			    <div class="container">'+
+'				<div class="row">'+
+'				    <div class="col-md-12">'+
+'					<h2>'+ data.description +						
+'					</h2>'+
+'					<a class="slide-button" id="btn-theme-'+ data.id +'">' + data.name + '评选</a>'+
+'				    </div>'+
+'				</div>'+
+'			    </div>'+
+'			</div> '+
+'			<img src="images/slides/slide1.jpg" alt="slide-01">  '+
+'		    </li>');	
+
+	$('#introduction .slides').append(slide);
+		initSuperFish();
+		initFlexSlider();
+    });
 
 /*-----------SUPERFISH INIT-------------*/
 
@@ -35,16 +74,11 @@ jQuery(document).ready(function($){
 		});
 	}
 	
-	initSuperFish();
+	
 
 /*-----------FLEXSLIDER INIT-------------*/
 
 	function initFlexSlider() {
-		
-		if ($("#introduction li").length > 1) {
-			$('.slide-navigation').show();
-		}		
-
 		$('.introduction-slider').flexslider({
 			animation: "fade",
 			controlNav: false,
@@ -78,12 +112,11 @@ jQuery(document).ready(function($){
 
 	}
 	
-	initFlexSlider();
+	
 
 /*-----------VOTE THEME INIT-------------*/
 	$('.slide-button').click(function(){
 		var id = $(this).attr("id").replace(/[^0-9]/ig, "");
-
 	});
 
 /*-----------SCROLLTO INIT-------------*/
@@ -319,7 +352,24 @@ triggerMobileMenu();
 	});
 
 
-
-	
+function sendJsonData(url, type, data, cb) {
+    $.ajax({
+      url:      url,
+      async:    true,
+      dataType: "json",
+      data:     data,
+      type:     type,
+      timeout:  12000, //12s time out
+      success:  function (data) {
+      	if($.isFunction(cb)) {
+      		cb(data);
+      	}
+      },
+      error: function (xhr, status, error) {
+      	alert("通信故障，请稍候再试");
+        console.log('Error: ' + error.message);        
+      },
+	});
+}
 
 });
