@@ -38,19 +38,19 @@ jQuery(document).ready(function($){
 	// 	</div> <img src="images/slides/slide1.jpg" alt="slide-01"> </li>');
 
 	var slide = $(' <li> '+
-'			<div class="flex-caption section-overlay slide-caption">'+
-'			    <div class="container">'+
-'				<div class="row">'+
-'				    <div class="col-md-12">'+
-'					<h2>'+ data.description +						
-'					</h2>'+
-'					<a class="slide-button" id="btn-theme-'+ data.id +'">' + data.name + '评选</a>'+
-'				    </div>'+
-'				</div>'+
-'			    </div>'+
-'			</div> '+
-'			<img src="images/slides/slide1.jpg" alt="slide-01">  '+
-'		    </li>');	
+		'			<div class="flex-caption section-overlay slide-caption">'+
+		'			    <div class="container">'+
+		'				<div class="row">'+
+		'				    <div class="col-md-12">'+
+		'					<h2>'+ data.description +						
+		'					</h2>'+
+		'					<a class="slide-button" id="btn-theme-'+ data.id +'">' + data.name + '评选</a>'+
+		'				    </div>'+
+		'				</div>'+
+		'			    </div>'+
+		'			</div> '+
+		'			<img src="images/slides/slide1.jpg" alt="slide-01">  '+
+		'		    </li>');	
 
 	$('#introduction .slides').append(slide);
 		initSuperFish();

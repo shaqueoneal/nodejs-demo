@@ -22,8 +22,7 @@ var _Vote = new Schema({
 // theme is a show where works can be voted
 var _Theme = new Schema({
 	id: String,
-	name: String,
-	candidates: String,	// candidates count, must provide *
+	name: String,	
 	begin: Date,	// open voting time
 	end: Date,		// close voting time
 	votesPerUser: String, //votes a user can have
@@ -31,9 +30,18 @@ var _Theme = new Schema({
 	maxVotes: String,	// max votes  -1: unlimited	
 	description: String,	// slogan poster etc.
 	imgUrl: String,		// advtise img
+	//candidates: String,	// candidates count, must provide *
+
+	candidates: [{
+		id: String,		//begins with 1
+		name: String,
+		author: String,	
+		url: String,	//where to access *
+		description: String,
+	}],
 });
 
-// candidate is the work in a theme
+// candidate is a work in the theme
 var _Candidate = new Schema({
 	id: String,		//begins with 1
 	themeId: String,
@@ -44,8 +52,8 @@ var _Candidate = new Schema({
 });
 
 _Theme.methods.countVotes = function (cb) {
-	var voteRecords = new Array(this.candidates);
-	for (var i = 0; i < this.candidates; i++) {
+	var voteRecords = [];
+	for (var i = 0; i < this.candidates.length; i++) {
 		voteRecords[i] = 0;
 	};
 
