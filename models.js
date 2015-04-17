@@ -116,8 +116,20 @@ function del(id, cb) {
 	});	
 }
 
+// if id omitted get all documents
 function get(id, cb) {
-	this.find({id: id},  function (err, doc) {
+	var key = {};
+
+	if ((arguments.length === 2) && isFunction(arguments[0])) {
+		if (id) {
+			key.id = id;
+		}
+	}
+	else if (arguments.length === 1){
+		cb = arguments[0];
+	}
+
+	this.find(key,  function (err, doc) {
 		if (err) {
 			console.log(err);
 		}

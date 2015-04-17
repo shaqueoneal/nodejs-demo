@@ -16,46 +16,6 @@ jQuery(document).ready(function($){
 /*------------------------------------------------------------------------*/
 /*	1.	Plugins Init
 /*------------------------------------------------------------------------*/
-	/*-----------GET THEMES ON VOTING-------------*/
-  	var jsonData = {
-		"themes":    "all",
-	};
-
-	sendJsonData('/', 'GET', jsonData, function (data) {
-      	console.log(data);
-
-	// var slide = $('<li><div class="flex-caption section-overlay slide-caption"> \
-	// 	    <div class="container"> \
-	// 		<div class="row"> \
-	// 		    <div class="col-md-12"> \
-	// 		    <h2>'
-	// 			+ data.description + 
-	// 			'</h2> <a class="slide-button" id="btn-theme-' + data.id + '">' 
-	// 			+ data.name + '评选</a> </div> \
-			    
-	// 		</div> \
-	// 	    </div> \		     
-	// 	</div> <img src="images/slides/slide1.jpg" alt="slide-01"> </li>');
-
-	var slide = $(' <li> '+
-		'			<div class="flex-caption section-overlay slide-caption">'+
-		'			    <div class="container">'+
-		'				<div class="row">'+
-		'				    <div class="col-md-12">'+
-		'					<h2>'+ data.description +						
-		'					</h2>'+
-		'					<a class="slide-button" id="btn-theme-'+ data.id +'">' + data.name + '评选</a>'+
-		'				    </div>'+
-		'				</div>'+
-		'			    </div>'+
-		'			</div> '+
-		'			<img src="images/slides/slide1.jpg" alt="slide-01">  '+
-		'		    </li>');	
-
-	$('#introduction .slides').append(slide);
-		initSuperFish();
-		initFlexSlider();
-    });
 
 /*-----------SUPERFISH INIT-------------*/
 
@@ -112,13 +72,6 @@ jQuery(document).ready(function($){
 
 	}
 	
-	
-
-/*-----------VOTE THEME INIT-------------*/
-	$('.slide-button').click(function(){
-		var id = $(this).attr("id").replace(/[^0-9]/ig, "");
-	});
-
 /*-----------SCROLLTO INIT-------------*/
         function initLocalScroll() {
                 
@@ -130,7 +83,7 @@ jQuery(document).ready(function($){
 
 
         }
-        initLocalScroll();
+        
 	
 /*-----------PARALLAX INIT-------------*/
 	function initParallax() {
@@ -139,7 +92,7 @@ jQuery(document).ready(function($){
 		$('#testimonials').parallax("100%", 0.1);
 
 	}
-	initParallax();
+	
 
 
 
@@ -159,7 +112,7 @@ function niceScrollInit() {
 	});
 }
 
-niceScrollInit();
+
 	
 /*-----------SUPERFISH INIT-------------*/
 
@@ -170,7 +123,7 @@ niceScrollInit();
 		});
 	}
 	
-	toolTipInit();
+	
  
 /*-----------ISOTOPE INIT-------------*/
 
@@ -201,9 +154,7 @@ niceScrollInit();
 			jQuery('#filters li').removeClass('current');
 			jQuery(this).parent().addClass('current');
 		});
-	}
-	
-	isotopeInit();
+	}	
 	
 
 	// Portfolio window
@@ -251,8 +202,6 @@ niceScrollInit();
 		});
 	}
 
-	
-	initMagnificPopup();
 
 /*------------------------------------------------------------------------*/
 /*	2.	Site Specific Functions
@@ -335,7 +284,6 @@ function triggerMobileMenu() {
 	
 }
 
-triggerMobileMenu();
 
 /*-----------SKILL ANIMATION-------------*/
 	jQuery('.skillbar').each(function() {
@@ -351,25 +299,191 @@ triggerMobileMenu();
 		
 	});
 
+/* when numPerPage is not provided the page is arranged according to the page number, otherwise by numPerPage, 
+ * numPerPage must in [1, 2, 4, 8]
+ */
+function initPage(canditates, pageNum, numPerPage) {
+	if (!candidates || candidates.length < 1) {
+		console.log('err: no candidates');
+		return;
+	}
+	
+	var number = candidates.length;
 
-function sendJsonData(url, type, data, cb) {
-    $.ajax({
-      url:      url,
-      async:    true,
-      dataType: "json",
-      data:     data,
-      type:     type,
-      timeout:  12000, //12s time out
-      success:  function (data) {
-      	if($.isFunction(cb)) {
-      		cb(data);
-      	}
-      },
-      error: function (xhr, status, error) {
-      	alert("通信故障，请稍候再试");
-        console.log('Error: ' + error.message);        
-      },
+	var rowNum = 1;
+	var columNum = 1;
+
+	var candidate = $('<div></div>');
+
+	if (numPerPage > number) {
+		number = numPerPage;
+	}
+
+	if (number <= 1) {
+		rowNum = 1;
+		columNum = 1;	
+	}
+	else if (number <= 2) {
+		rowNum = 1;
+		columNum = 2;
+	}
+	else if (number <= 4) {
+		rowNum = 2;
+		columNum = 2;
+	}
+	else if (number <= 8) {
+		rowNum = 2;
+		columNum = 4;
+	}
+	else {
+		// no more than 8 pics
+		console.log('err: more then 8 pics');
+		rowNum = 2;
+		columNum = 4;
+	}
+
+	var row = $('<div class="row"></div>');
+
+	$.each(canditates, function (i, d){
+		row.append('<div class="col-xs-12 col-md-' + (12 / columNum) + '">
+					<div class="embed-responsive embed-responsive-4by3 detail">
+						<iframe class="full" src="http://10.99.73.184:7042/index-200px.html" scrolling="no"></iframe>
+					</div>
+					<div>
+						<button class="btn btn-success" id="btn_vote">投他一票</button>
+						<button class="btn btn-primary" id="btn_origin">查看原稿</button>
+					</div>
+				</div>');	
+
+
 	});
+	
+
+	var container = $('#exhibition .container').append(row);
+
+
 }
+
+function initExhibition(theme) {
+	if (!theme || (theme.candidates.length < 1)) {
+		console.log('err: no candidates');
+		return;
+	}
+
+	var pageNo = Math.ceil(theme.candidates.length / 8);
+	var lis = [];
+
+	for (var i = 0; i <= pageNo; i++) {
+		initPage(theme.candidates, i + 1, 8);
+	};
+
+	if (pageNo > 1) {
+		
+		for (i = 0; i < pageNo; i++) {
+			lis[i] = $('<li></li>').text(pageNo + 1);
+		};
+	}
+
+	if (pageNo > 1) {
+		//show pagination
+		
+
+	$('<div class="pagination"><ul class="nav"></ul></div>').append(lis);
+}
+
+
+
+}
+
+	function initVoting(theme) {
+	}
+
+	/*-----------GET THEMES ON VOTING-------------*/
+	function initTheme() {
+	  	var jsonData = {
+			"themes":    "all",
+		};
+
+		sendJsonData('/', 'GET', jsonData, function (themes) {
+	      	// console.log(data);
+
+	      	/*-----------VOTE THEME INIT-------------*/
+	      	$.each(themes, function (i, d) {
+	      		var slide = $(' <li> '+
+	      			'			<div class="flex-caption section-overlay slide-caption">'+
+	      			'			    <div class="container">'+
+	      			'				<div class="row">'+
+	      			'				    <div class="col-md-12">'+
+	      			'					<h2>'+ d.description +						
+	      			'					</h2>'+
+	      			'					<a class="slide-button" id="btn-theme-'+ d.id +'">' + d.name + '评选</a>'+
+	      			'				    </div>'+
+	      			'				</div>'+
+	      			'			    </div>'+
+	      			'			</div> '+
+	      			'			<img src="' + d.imgUrl + '" alt="slide-"' +  d.id + '>  '+
+	      			'		    </li>');	
+
+	      		$('#introduction .slides').append(slide);
+	      	});
+
+	      	if (themes.length > 1) {
+	      		$(".slide-navigation").show();
+	      	}
+
+	      	$('.slide-button').click(function(){
+	      		var id = $(this).attr("id").replace(/[^0-9]/ig, "");
+	      	});
+
+
+			$('#btn_vote').click(function(e){		
+				var jsonData = {
+					"theme":    "uis",
+					"no":       "1",
+					"title":    "200px",
+					"comments": "test"
+				};				
+
+				var jsonStr = JSON.stringify(jsonData);
+
+				if ($.cookie('vote')) {
+					var cookieData = JSON.parse($.cookie('vote'));
+
+					if (jsonData.no != cookieData.no) {
+						if (!confirm("您已经投过票了，重新投票的话上次投票会作废，确定要重新投票吗？")){
+							return false;
+						};
+					}
+				}
+
+				sendJsonData('user_vote/', 'POST', jsonData, function (data) {
+		          	console.log(data);
+		        	alert("您投了 " + jsonData.no + "# 作品" + (jsonData.title ? " :《" + jsonData.title + "》":"") + "一票，感谢您的参与，现在您可以查看投票结果！");
+
+		        	$.cookie('vote', jsonStr);
+		        });
+
+				return false;
+
+			});
+
+		initSuperFish();
+		initFlexSlider();
+		initLocalScroll();
+		initParallax();
+		niceScrollInit();
+		toolTipInit();
+		isotopeInit();
+		initMagnificPopup();
+		triggerMobileMenu();
+
+		initVoting(theme);
+
+	    });
+
+	}
+
+	initTheme();
+
 
 });

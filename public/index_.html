@@ -21,7 +21,6 @@
         <!-- JavaScripts -->
         <script src="js/jquery-1.10.2.min.js"></script>
         <script src="js/modernizr.js"></script>
-        <script src="js/Chart.js"></script>
         <!--[if lt IE 8]>
 	    <div style=' clear: both; text-align:center; position: relative;'>
             <a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" alt="" /></a>
@@ -43,8 +42,8 @@
 	   
 		<ul class="mobile-navigation">
 		    <li><a href="#introduction">首页</a></li>
-		    <li><a href="#about">About Us</a></li>
-		    <li><a href="#portfolio">Portfolio</a></li>
+		    <li><a href="#exhibition">展区</a></li>
+		    <li><a href="#outcome">评选结果</a></li>
 		    <li><a href="#partners">Partners</a></li>
 		    <li><a href="#our-team">Our Team</a></li>
 		    <li><a href="#contact">联系我们</a></li>
@@ -77,8 +76,8 @@
 			<nav id="navigation" class="hidden-sm hidden-xs">
 			    <ul id="main-nav" class="main-navigation">
 				<li class="current"><a href="#introduction">首页</a></li>
-				<li><a href="#about">About Us</a></li>
-				<li><a href="#portfolio">Portfolio</a></li>
+				<li><a href="#exhibition">展区</a></li>
+				<li><a href="#outcome">评选结果</a></li>
 				<li><a href="#partners">Partners</a></li>
 				<li><a href="#our-team">Our Team</a></li>
 				<li><a href="#contact">联系我们</a></li>
@@ -160,13 +159,12 @@
 	    </div> <!-- //.flexslider -->
 	</section>
 
-				<div class="col-md-4">
-					<canvas id="cvs_votes_bar" height="220"></canvas>									
-				</div>		
-	<!-- End Introduction Section -->
-	<div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
-	<!-- About Section -->
-	<section id="about" class="content-section clearfix">
+	<section id="exhibition" class="content-section clearfix" style="display: none">
+		<div class="container"> </div>
+	</section>
+	
+	<!-- exhibition Section -->
+	<section id="about" class="content-section clearfix" style="display: none">
 	    <div class="container">
 		<div class="row">
 		    <div class="col-md-12">
@@ -240,7 +238,7 @@
 		</div> <!-- //.row -->
 	    </div> <!-- //.container -->
 	</section>
-	<section id="counter" class="content-section content-overlay parallax-section clearfix">
+	<section id="counter" class="content-section content-overlay parallax-section clearfix" style="display: none">
 		<div class="section-overlay">
 		    <div class="container">
 			<div class="row fadeInUp">
@@ -272,10 +270,10 @@
 		    
 		</div>
 	</section>
-	<!-- End About Section -->
+	<!-- End exhibition Section -->
 	
 	<!-- Portfolio Section -->
-	<section id="portfolio" class="content-section clearfix">
+	<section id="portfolio" class="content-section clearfix" style="display: none">
 	    <div class="container">
 		<div class="row">
 		    <div class="col-md-12">
@@ -438,7 +436,7 @@
 	<!-- End Portfolio Section -->
 	
 	<!-- Partners Section -->
-	<section id="partners" class="content-section content-overlay parallax-section clearfix">
+	<section id="partners" class="content-section content-overlay parallax-section clearfix" style="display: none">
 	    
 	    <div class="section-overlay">
 		<div class="container">
@@ -474,7 +472,7 @@
 	<!-- End Partners Section -->
 	
 	<!-- Partners Section -->
-	<section id="our-team" class="content-section clearfix">
+	<section id="our-team" class="content-section clearfix" style="display: none">
 	    <div class="container">
 		<div class="row">
 		    <div class="col-md-12">
@@ -567,7 +565,7 @@
 	<!-- End Partners Section -->
 	
 	<!-- Testimonials Section -->
-	<section id="testimonials" class="content-section content-overlay parallax-section">
+	<section id="testimonials" class="content-section content-overlay parallax-section" style="display: none">
 	    <div class="section-overlay">
 		<div class="container">
 		    <div class="row">
@@ -598,7 +596,7 @@
 	<!-- End Testimonials Section -->
 	
 	<!-- Contact Section -->
-	<section id="contact" class="content-section">
+	<section id="contact" class="content-section" style="display: none">
 	    <div class="container">
 		<div class="row">
 		    <div class="col-md-12">
@@ -663,18 +661,18 @@
 			<div class="container">
                 <div class="col-md-6 col-sm-6">
                     <div class="copyright-text">
-                        <span>Copyright &copy; 2084 More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></span>
+                        <span>Copyright &copy; 2015 by zhaoshenglu </span>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                    <div class="social-icons">
+<!--                     <div class="social-icons">
                         <ul>
                             <li><a href="#" class="fa fa-facebook"></a></li>
                             <li><a href="#" class="fa fa-twitter"></a></li>
                             <li><a href="#" class="fa fa-linkedin"></a></li>
                             <li><a href="#" class="fa fa-rss"></a></li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </footer>
@@ -683,28 +681,32 @@
         <!-- JavaScripts -->
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="js/plugins.js"></script>
+        <script src="js/Chart.js"></script>
+        <script src="js/util.js"></script>
         <script src="js/custom.js"></script>
-<script type="text/javascript">
-		  var ctx = $("#cvs_votes_bar").get(0).getContext("2d");
-	      
-	      var data = {
-	        labels: ["VM1", "VM2", "VM3"],
-	        // labels: ["VM1"],
-	        datasets: [
-	        {
-	          label: "My First dataset",
-	          fillColor: "#5cb85c",
-	          strokeColor: "rgba(220,220,220,0.8)",
-	          highlightFill: "#5AD3D1",
-	          highlightStroke: "rgba(220,220,220,1)",
-	          data: [80, 70, 60]
-	          // data: [80]
-	        },
-	        ]
-	      };
 
-	      new Chart(ctx).Bar(data, {responsive: true, barValueSpacing: 30, scaleFontColor: "#222",barDatasetSpacing: 30});
+<script type="text/javascript">
+		  // var ctx = $("#cvs_votes_bar").get(0).getContext("2d");
+	      
+	   //    var data = {
+	   //      labels: ["VM1", "VM2", "VM3"],
+	   //      // labels: ["VM1"],
+	   //      datasets: [
+	   //      {
+	   //        label: "My First dataset",
+	   //        fillColor: "#5cb85c",
+	   //        strokeColor: "rgba(220,220,220,0.8)",
+	   //        highlightFill: "#5AD3D1",
+	   //        highlightStroke: "rgba(220,220,220,1)",
+	   //        data: [80, 70, 60]
+	   //        // data: [80]
+	   //      },
+	   //      ]
+	   //    };
+
+	   //    new Chart(ctx).Bar(data, {responsive: true, barValueSpacing: 30, scaleFontColor: "#222",barDatasetSpacing: 30});
 
 </script>
+
     </body>
 </html>

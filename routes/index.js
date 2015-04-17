@@ -69,18 +69,30 @@ var themeObj = {
   maxVotes: -1, 
   description: 'UIS 登陆页面评选 火热进行中，动动您的手指，选出心中所爱吧！ \n \
                无需注册，直接点击下方按钮参与投票',
+  imgUrl: "images/slides/slide1.jpg",
   candidates: g_candidates, 
 };
 
 Theme.set(themeObj, function (err, doc) {
   if (err) {
+    console.log(err);
     return;
   }
 });
 
 router.get('/', function(req, res, next) {   
-	console.log(process.cwd());
-
+  if ("all" == req.query.themes) {
+    Theme.get(function(err, docs) {
+      if (err) {
+        console.log('err');
+        return;
+      }
+      
+      // console.log(docs);
+      res.send(docs);
+    });    
+  }
+  
   var userObj = {
     id: req.ip,
     name : req.ip,
@@ -95,17 +107,13 @@ router.get('/', function(req, res, next) {
     }
   });
 
-  var theme = new Theme(themeObj);  //this is theme doc
+  // var theme = new Theme(themeObj);  //this is theme doc
 
-  theme.countVotes(function(voteRecords) {
-    console.log(voteRecords);
-  });
-
-  if ("all" == req.query.themes) {
-    res.send(themeObj);
-  }
-  
-  // next();	
+  // theme.countVotes(function(voteRecords) {
+  //   console.log(voteRecords);
+  // });
+	
+  next();
 });
 
 // router.get('/', function(req, res, next) { 
