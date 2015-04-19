@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<head>
+	<title>投啊</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="css/magnific-popup.css" rel="stylesheet"> 
+<!-- 	<link href="css/templatemo_style.css" rel="stylesheet" type="text/css">	 -->
+	<link href="stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+	<style type="text/css">
+		iframe.full {
+			width:1440px;
+			height:900px;
+			-webkit-transform:scale(0.2);
+			-webkit-transform-origin:left top;
+		}
+
+    .doughnut-legend {
+      list-style: none;
+      position: absolute;
+      right: -10px;
+      top: 0;
+    }
+
+    .doughnut-legend li {
+      display: block;
+      padding-left: 30px;
+      position: relative;
+      margin-bottom: 4px;
+      border-radius: 5px;
+      padding: 2px 8px 2px 28px;
+      font-size: 14px;
+      cursor: default;
+      -webkit-transition: background-color 200ms ease-in-out;
+      -moz-transition: background-color 200ms ease-in-out;
+      -o-transition: background-color 200ms ease-in-out;
+      transition: background-color 200ms ease-in-out;
+    }
+    .doughnut-legend li span {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      border-radius: 5px;
+    }
+
+	</style>	
+</head>
+<body calss="landing">
+	<div class="well">	
+		<h1>投啊<small>——大家都来投票吧！</small></h1>
+		<h3 class="center-text">UIS 首页评选，每人限投一票，把选票投给您最满意的作品吧！</h3>
+		<button class="btn btn-primary btn-lg" id="btn_enter">点击进入</button>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a href="#">首页</a></li>
+				<li role="presentation"><a href="#">结果</a></li>
+				<li role="presentation"><a href="#">关于</a></li>
+			</ul>
+		</div>
+	</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3 detail">
+						<iframe class="full" src="http://10.99.73.184:7042/index-200px.html" scrolling="no"></iframe>
+					</div>
+					<div>
+						<button class="btn btn-success" id="btn_vote">投他一票</button>
+						<button class="btn btn-primary" id="btn_origin">查看原稿</button>
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-160px.html" scrolling="no"></iframe>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-120px.html" scrolling="no"></iframe>
+					</div> 
+				</div>
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-100px.html" scrolling="no"></iframe>
+					</div> 
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="row">
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-200px.html" scrolling="no"></iframe>
+					</div>
+					<div>
+						<button class="btn btn-success" id="btn_vote">投他一票</button>
+						<button class="btn btn-primary" id="btn_origin">查看原稿</button>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-3">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe class="full" src="http://10.99.73.184:7042/index-160px.html" scrolling="no"></iframe>
+					</div>
+				</div>
+			</div>
+			<header>
+				<h3>投票结果</h3>
+			</header>
+			<div class="row well">
+				<div class="col-md-2"></div>
+				<div class="col-md-4">
+					<canvas id="cvs_votes_bar" height="220"></canvas>									
+				</div>				
+				<div class="col-md-4">
+					<canvas id="cvs_votes_pie" height="220"></canvas>
+					<ul id="legend"></ul>	
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+
+
+		</div>
+
+
+<!-- 		<div id="portfolio-content" class="center-text">
+			<div class="portfolio-page" id="page-1">
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/1-large.jpg">
+						<img src="images/1-small.jpg" alt="image 1">
+						<div class="detail">
+							<h3>Wavy Road</h3>
+							<p>Duis ac </p>
+							<span class="btn" id="btn_vote">投票</span><br/>
+							<span class="btn" id="btn_view">查看原网页</span>	
+						</div>
+					</a>
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/2-large.jpg">
+						<img src="images/2-small.jpg" alt="image 2">
+						<div class="detail">
+							<h3>Rocky Mountain</h3>
+							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/3-large.jpg">
+						<img src="images/3-small.jpg" alt="image 3">
+						<div class="detail">
+							<h3>Clear River</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/4-large.jpg">
+						<img src="images/4-small.jpg" alt="image 4">
+						<div class="detail">
+							<h3>Rounded Flower</h3>
+							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/5-large.jpg">
+						<img src="images/5-small.jpg" alt="image 5">
+						<div class="detail">
+							<h3>Bustling City</h3>
+							<p>Duis ac laoreet mi. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus. Curabitur non est neque.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/6-large.jpg">
+						<img src="images/6-small.jpg" alt="image 6">
+						<div class="detail">
+							<h3>Retired Leaves</h3>
+							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/7-large.jpg">
+						<img src="images/7-small.jpg" alt="image 7">
+						<div class="detail">
+							<h3>Clean Design</h3>
+							<p>Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/8-large.jpg">
+						<img src="images/8-small.jpg" alt="image 8">
+						<div class="detail">
+							<h3>Rock Solid</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+			</div>
+			<div class="portfolio-page" id="page-2" style="display:none;">
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/8-large.jpg">
+						<img src="images/8-small.jpg" alt="image 8">
+						<div class="detail">
+							<h3>Wavy Road</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Sed in molestie lectus. Curabitur non est neque.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/7-large.jpg">
+						<img src="images/7-small.jpg" alt="image 7">
+						<div class="detail">
+							<h3>Rocky Mountain</h3>
+							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet. Duis ac laoreet mi.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/6-large.jpg">
+						<img src="images/6-small.jpg" alt="image 6">
+						<div class="detail">
+							<h3>Clear River</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/5-large.jpg">
+						<img src="images/5-small.jpg" alt="image 5">
+						<div class="detail">
+							<h3>Rounded Flower</h3>
+							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/4-large.jpg">
+						<img src="images/4-small.jpg" alt="image 4">
+						<div class="detail">
+							<h3>Bustling City</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+                
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/3-large.jpg">
+						<img src="images/3-small.jpg" alt="image 3">
+						<div class="detail">
+							<h3>Retired Leaves</h3>
+							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/2-large.jpg">
+						<img src="images/2-small.jpg" alt="image 2">
+						<div class="detail">
+							<h3>Clean Design</h3>
+							<p>Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/1-large.jpg">
+						<img src="images/1-small.jpg" alt="image 1">
+						<div class="detail">
+							<h3>Rock Solid</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+			</div>
+			<div class="portfolio-page" id="page-3" style="display:none;">
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/3-large.jpg">
+						<img src="images/3-small.jpg" alt="image 3">
+						<div class="detail">
+							<h3>Wavy Road</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Curabitur non est neque.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/2-large.jpg">
+						<img src="images/2-small.jpg" alt="image 2">
+						<div class="detail">
+							<h3>Rocky Mountain</h3>
+							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet. Duis ac laoreet mi.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/4-large.jpg">
+						<img src="images/4-small.jpg" alt="image 4">
+						<div class="detail">
+							<h3>Clear River</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/1-large.jpg">
+						<img src="images/1-small.jpg" alt="image 1">
+						<div class="detail">
+							<h3>Rounded Flower</h3>
+							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet. </p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/5-large.jpg">
+						<img src="images/5-small.jpg" alt="image 5">
+						<div class="detail">
+							<h3>Bustling City</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Curabitur non est neque.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/6-large.jpg">
+						<img src="images/6-small.jpg" alt="image 22">
+						<div class="detail">
+							<h3>Retired Leaves</h3>
+							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/8-large.jpg">
+						<img src="images/8-small.jpg" alt="image 8">
+						<div class="detail">
+							<h3>Clean Design</h3>
+							<p>Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+				<div class="portfolio-group">
+					<a class="portfolio-item" href="images/7-large.jpg">
+						<img src="images/7-small.jpg" alt="image 7">
+						<div class="detail">
+							<h3>Rock Solid</h3>
+							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
+							<span class="btn">View</span>
+						</div>
+					</a>				
+				</div>
+			</div> <!-- page 3	-->	
+<!-- 			<div class="pagination">
+				<ul class="nav">
+					<li class="active">1</li>
+					<li>2</li>
+					<li>3</li>
+				</ul>
+			</div>
+		</div>  
+		</div> -->	<!-- /.content-container -->	
+    <div>
+		<footer>
+			<button id='some-button'>some-button</button>
+			<p>Copyright &copy; 2015 by zhaoshenglu 07042 </p>
+<!-- 			<div class="social right">
+				<a href="#"><i class="fa fa-facebook"></i></a>
+				<a href="#"><i class="fa fa-twitter"></i></a>
+				<a href="#"><i class="fa fa-google-plus"></i></a>
+				<a href="#"><i class="fa fa-dribbble"></i></a>
+				<a href="#"><i class="fa fa-instagram"></i></a>
+				<a href="#"><i class="fa fa-linkedin"></i></a>
+			</div> -->
+		</footer>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/modernizr.2.5.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.magnific-popup.min.js"></script> 
+	<script type="text/javascript" src="js/templatemo_script.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.cookie.js"></script>
+	<script type="text/javascript" src="javascripts/popwin.js"></script>
+	<script type="text/javascript" src="javascripts/Chart.js"></script>
+
+	<script type="text/javascript">
+		$(function () {
+			// $('.pagination li').click(changePage);
+			// $('.portfolio-item').magnificPopup({ 
+			// 	type: 'iframe',
+			// 	gallery:{
+			// 		enabled:true
+			// 	}
+			// });
+
+	      var ctx = $("#cvs_votes_bar").get(0).getContext("2d");
+	      
+	      var data = {
+	        labels: ["VM1", "VM2", "VM3"],
+	        datasets: [
+	        {
+	          label: "My First dataset",
+	          fillColor: "#5cb85c",
+	          strokeColor: "rgba(220,220,220,0.8)",
+	          highlightFill: "#5AD3D1",
+	          highlightStroke: "rgba(220,220,220,1)",
+	          data: [80, 70, 60]
+	        },
+	        ]
+	      };
+
+	      new Chart(ctx).Bar(data, {responsive: true, barValueSpacing: 30, scaleFontColor: "#222",});
+
+	      var portCounts = [
+	        {
+	          value:     100, 
+	          label:     'GE',
+	          color:     "red",
+	          highlight: "#5AD3D1",
+	        },
+	        {
+	          value:     200, 
+	          label:     'XGE',
+	          color:     "green",
+	          highlight: "#5AD3D1",
+	        },
+	        {
+	          value:     40, 
+	          label:     'FGE',
+	          color:     "yellow",
+	          highlight: "#5AD3D1",
+	        },
+	      ];
+
+	      ctx = $("#cvs_votes_pie").get(0).getContext("2d");
+		    var pie = new Chart(ctx).Doughnut(portCounts, {responsive: true, UserSet: true, percentageInnerCutout: 0, tip:'%', 
+          legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><% console.log(segments[i]); if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+        });
+
+		  $("#legend").append(pie.generateLegend());
+
+		  $('#btn_enter').click(function(e){
+		  		var jsonData = {
+					"theme":    "uis",
+				};	
+
+				sendJsonData('user_vote/', 'GET', jsonData, function (data) {
+		          	console.log(data);
+		        	
+		        	$.cookie('vote', jsonStr);
+		        });
+		    });
+
+			$('#btn_origin').click(function(e){
+				var height =  (768 < screen.availHeight) ? 768 : (screen.availHeight - 120);
+				var width = height * 16 / 10;
+
+				popWin.showWin(width, height ,"通用的iframe弹层插件","http://10.99.73.184:7042/index-200px.html");
+			});
+
+			$('#btn_vote').click(function(e){		
+				var jsonData = {
+					"theme":    "uis",
+					"no":       "1",
+					"title":    "200px",
+					"comments": "test"
+				};				
+
+				var jsonStr = JSON.stringify(jsonData);
+
+				if ($.cookie('vote')) {
+					var cookieData = JSON.parse($.cookie('vote'));
+
+					if (jsonData.no != cookieData.no) {
+						if (!confirm("您已经投过票了，重新投票的话上次投票会作废，确定要重新投票吗？")){
+							return false;
+						};
+					}
+				}
+
+				sendJsonData('user_vote/', 'POST', jsonData, function (data) {
+		          	console.log(data);
+		        	alert("您投了 " + jsonData.no + "# 作品" + (jsonData.title ? " :《" + jsonData.title + "》":"") + "一票，感谢您的参与，现在您可以查看投票结果！");
+
+		        	$.cookie('vote', jsonStr);
+		        });
+
+				return false;
+
+			});
+
+		});
+	</script>	
+</body>
+</html>
