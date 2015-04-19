@@ -51,6 +51,15 @@ var _Candidate = new Schema({
 	description: String,
 });
 
+
+var _UserMsg = new Schema({
+	id : String, 
+	name : String,
+	email : String,
+	message : String,	
+	date : Date
+});
+
 _Theme.methods.countVotes = function (cb) {
 	var voteRecords = [];
 	for (var i = 0; i < this.candidates.length; i++) {
@@ -78,6 +87,7 @@ var User = mongoose.model('User', _User);
 var Vote = mongoose.model('Vote', _Vote);
 var Theme = mongoose.model('Theme', _Theme);
 var Candidate = mongoose.model('Candidate', _Candidate);
+var UserMsg = mongoose.model('UserMsg', _UserMsg);
 
 function add(entity, cb) {
 	if (!entity.id) {
@@ -170,12 +180,13 @@ function set(entity, cb) {
 	});
 }
 
-Candidate.add = Vote.add = Theme.add = User.add = add;
-Candidate.del = Vote.del = Theme.del = User.del = del;
-Candidate.get = Vote.get = Theme.get = User.get = get;
-Candidate.set = Vote.set = Theme.set = User.set = set;
+UserMsg.add = Vote.add = Theme.add = User.add = add;
+UserMsg.del = Vote.del = Theme.del = User.del = del;
+UserMsg.get = Vote.get = Theme.get = User.get = get;
+UserMsg.set = Vote.set = Theme.set = User.set = set;
 
 // export them
 exports.User = User;
 exports.Vote = Vote;
 exports.Theme = Theme;
+exports.UserMsg = UserMsg;

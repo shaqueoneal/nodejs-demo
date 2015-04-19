@@ -73,7 +73,7 @@ jQuery(document).ready(function($){
 	}
 	
 /*-----------SCROLLTO INIT-------------*/
-        function initLocalScroll() {
+    function initLocalScroll() {
                 
 		jQuery('ul.main-navigation, ul.mobile-navigation').localScroll({
 			offset: -112,
@@ -82,7 +82,7 @@ jQuery(document).ready(function($){
 		});
 
 
-        }
+    }
         
 	
 /*-----------PARALLAX INIT-------------*/
@@ -622,7 +622,7 @@ var g_theme = {}; 	//contains current theme data
 	      			'				</div>'+
 	      			'			    </div>'+
 	      			'			</div> '+
-	      			'			<img src="' + d.imgUrl + '" alt="slide-"' +  d.id + '>  '+
+	      			'			<img src="' + d.imgUrl + '" alt="slide-' +  d.id + '">  '+
 	      			'		    </li>');	
 
 	      		$('#introduction .slides').append(slide);
@@ -669,6 +669,10 @@ var g_theme = {}; 	//contains current theme data
 	}
 
 	initTheme();
+
+	function initContact() {
+		$('#btn_sendMsg').submit()
+	}
 
 
 });

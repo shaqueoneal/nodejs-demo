@@ -6,6 +6,7 @@ var models = require('../models')
 var User = models.User;
 var Theme = models.Theme;
 var Vote = models.Vote;
+var UserMsg = models.UserMsg;
 
 mongoose.connect('mongodb://localhost/user_vote');
 
@@ -214,6 +215,30 @@ router.post('/user_vote', function(req, res, next) {
     }
 });
 
+router.post('/user_message', function(req, res, next) {
+  console.log(req.body);
+  var userMsg = {};
+  userMsg.id =  Date.now().toString();
+  userMsg.name = req.body.name;
+  userMsg.email = req.body.email;
+  userMsg.message = req.body.message;
+  userMsg.date = Date.now();
+
+  UserMsg.add(userMsg, function (err, doc) {
+    var message = "感谢您的反馈，我们将及时改进！";
+
+    if (err) {
+      console.log(err);
+      message = "似乎有点故障。。。"
+
+    }
+
+    res.render('user_message', {
+      message: message,
+    });
+  });
+
+});
 
  // proxy = new proxy('a’,’b’,’c’,function(a,b,c){ render('index’,…)}) db.findByType(0,function(doc,err){emit('a’,doc)}); db.findByType(1,function(doc,err){…); db.findByType(2,function(doc,err){…);
 
