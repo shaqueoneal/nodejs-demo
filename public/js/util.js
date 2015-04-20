@@ -38,16 +38,17 @@ function setStringWidth(str, len) {
   return s;
 }
 
+
 function getColor(index) {
-  var colors = ["#e00000"];
-  return colors[index] ? colors[index] : colors[colors.length - 1]; 
+  var colors = ['#5b90bf', '#96b5b4', '#a3be8c', '#ab7967', '#d08770', '#b48ead'];
+
+  return colors[index] ? colors[index] : colors[colors.length - 1];
 }
 
-function getHighLightColor(color) {
-  var color = color.substring(1);
-  color = parseInt(color, 16) + parseInt("141414", 16);
-
-  return '#' + color.toString(16); 
+//color is formatted in '#5B90BF'
+function getHighlightColor(color) {
+  var highlight = (parseInt(color.substring(1), 16) + parseInt("141414", 16)) % parseInt("1000000", 16);
+  return '#' + highlight.toString(16);
 }
 
 function sendJsonData(url, type, data, cb) {

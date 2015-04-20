@@ -488,7 +488,7 @@ function initExhibition(theme) {
 		          label: "My First dataset",
 		          fillColor: getColor(0),
 		          strokeColor: "rgba(220,220,220,0.8)",
-		          highlightFill: getHighLightColor(getColor(0)),
+		          highlightFill: getHighlightColor(getColor(0)),
 		          highlightStroke: "rgba(220,220,220,1)",
 		          data: []
 		        },
@@ -500,7 +500,7 @@ function initExhibition(theme) {
 			data.datasets[0].data.push(d.value);
 		});
 
-		new Chart(ctx).Bar(data, {barValueSpacing: 30, scaleFontColor: "#222",});
+		new Chart(ctx).Bar(data, {responsive: false, barValueSpacing: 30, scaleFontColor: "#222",});
 	}
 
 	function drawPie(id, dataList, legendId) {
@@ -512,7 +512,7 @@ function initExhibition(theme) {
 			dataItem.value = d.value;
 			dataItem.label = d.label;
 			dataItem.color = getColor(i);
-			dataItem.highlight = getHighLightColor(getColor(0)),
+			dataItem.highlight = getHighlightColor(getColor(0)),
 
 			data.push(dataItem);
 		});
