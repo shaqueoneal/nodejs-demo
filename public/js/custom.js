@@ -478,30 +478,46 @@ function initExhibition(theme) {
 		});
 	}
 
+  function drawBar(id, dataList, legendId, barNumber) {
+    var data = {
+      labels: [''],
+      datasets: [{data: []}],
+    };
 
-	function drawBar(id, dataList, legendId) {
-		var ctx = $('#' + id).get(0).getContext("2d");
-		var data = {
-			labels: [],
-			datasets: [
-				{
-		          label: "My First dataset",
-		          fillColor: getColor(0),
-		          strokeColor: "rgba(220,220,220,0.8)",
-		          highlightFill: getHighlightColor(getColor(0)),
-		          highlightStroke: "rgba(220,220,220,1)",
-		          data: []
-		        },
-	        ],
-		};
+    $.each(dataList, function(i, d) {
+      // if (i >= barNumber) {
+      //   return false;
+      // }      
 
-		$.each(dataList, function(i, d) {
-			data.labels.push(d.label);
-			data.datasets[0].data.push(d.value);
-		});
+      data.labels[i] = d.label;
 
-		new Chart(ctx).Bar(data, {responsive: false, barValueSpacing: 30, scaleFontColor: "#222",});
-	}
+      if (getStringWidth(d.label) > 8) {
+        data.labels[i] = setStringWidth(d.label, 8);
+      }
+
+      data.datasets[0].data[i]         = d.value;
+      data.datasets[0].fillColor       = getColor(0);
+      data.datasets[0].highlightFill   = getHighlightColor(getColor(0));
+      data.datasets[0].highlightStroke = "rgba(220,220,220,1)";
+      data.datasets[0].strokeColor     = "rgba(220,220,220,0.8)";  
+    });    
+
+    ctx = $("#" + id).get(0).getContext("2d");
+    var chart =  new Chart(ctx).Bar(data, {responsive: false, barValueSpacing:10, scaleFontColor: "#222", barDatasetSpacing:30, scaleLineColor: "#FFF",});
+
+    // $.each(dataList, function(i, d) {
+    //   if (i >= barNumber) {
+    //     return false;
+    //   }
+      
+    //   chart.datasets[0].bars[i].fillColor = getBarColor(dataList[i].value); 
+    //   chart.datasets[0].bars[i].highlightFill = getColorHighlight(getBarColor(dataList[i].value));    
+    // });    
+
+    // chart.update();
+
+    return chart;
+  }
 
 	function drawPie(id, dataList, legendId) {
 		var ctx = $('#' + id).get(0).getContext("2d");
@@ -512,13 +528,13 @@ function initExhibition(theme) {
 			dataItem.value = d.value;
 			dataItem.label = d.label;
 			dataItem.color = getColor(i);
-			dataItem.highlight = getHighlightColor(getColor(0)),
+			dataItem.highlight = getHighlightColor(getColor(i)),
 
 			data.push(dataItem);
 		});
 
 		var option = {
-			UserSet: true, 
+			animationEasing : "linear",
 			percentageInnerCutout: 0
 		};
 
