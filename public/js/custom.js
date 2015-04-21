@@ -524,6 +524,11 @@ function initExhibition(theme) {
     console.log(data);
 
     ctx = $("#" + id).get(0).getContext("2d");
+
+    if (g_bar) {
+    	g_bar.destroy();
+    }
+
     var chart =  new Chart(ctx).Bar(data, {responsive: false, barValueSpacing:10, scaleFontColor: "#222", barDatasetSpacing:30, scaleLineColor: "#FFF",});
 
     // $.each(dataList, function(i, d) {
@@ -555,9 +560,13 @@ function initExhibition(theme) {
 		});
 
 		var option = {
-			animationEasing : "linear",
+			// animationEasing : "linear",
 			percentageInnerCutout: 0
 		};
+
+		if (g_pie) {
+			g_pie.destroy();
+		}
 
 		var pie = new Chart(ctx).Doughnut(data, option);
 
@@ -569,6 +578,7 @@ function initExhibition(theme) {
 			$("#" + legendId).append(pie.generateLegend());
 		}
 		 
+		return pie;
 	}
 
 	function showResultDetail(themeId) {
@@ -601,6 +611,9 @@ function initExhibition(theme) {
 		});
 	}
 
+var g_bar;
+var g_pie;
+
 	function showResult(themeId) {
 		$('#outcome').show();
 
@@ -625,8 +638,8 @@ function initExhibition(theme) {
 				voteRecords.push(vote);
 			});
 
-			drawBar('cvs_votes_bar', voteRecords);
-			drawPie('cvs_votes_pie', voteRecords, 'legend');
+			g_bar = drawBar('cvs_votes_bar', voteRecords);
+			g_pie = drawPie('cvs_votes_pie', voteRecords, 'legend');
 
 		});	
 	}
