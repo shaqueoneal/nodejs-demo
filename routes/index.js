@@ -47,14 +47,14 @@ var g_candidates = [
   {
     id: 5,
     name: "顾名思义",
-    author: "zhaoshenglu",
-    url: "http://10.99.73.184:7042/index.html",
+    author: "fangqingyun",
+    url: "http://10.99.73.184:7042/index-now.html",
     description: "",
   },
   {
     id: 6,
     name: "人不如故",
-    author: "zhaoshenglu",
+    author: "fangqingyun",
     url: "http://10.99.73.184:7042/index-old.html",
     description: "",
   },
@@ -74,12 +74,12 @@ var themeObj = {
   candidates: g_candidates, 
 };
 
-// Theme.set(themeObj, function (err, doc) {
-//   if (err) {
-//     console.log(err);
-//     return;
-//   }
-// });
+Theme.set(themeObj, function (err, doc) {
+  if (err) {
+    console.log(err);
+    return;
+  }
+});
 
 router.get('/user_vote', function(req, res, next) {   
   if ("all" == req.query.themes) {

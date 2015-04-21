@@ -406,14 +406,18 @@ function initExhibition(theme) {
 	function initVoting(canditates) {
 		var btn_vote = $('<button class="btn btn-success">投他一票</button>');
 		var btn_origin = $('<button class="btn btn-primary">查看原稿</button>');
+		var btn_info = $('<button class="btn btn-warning">作品介绍</button>');
 
 		$('.embed-responsive').each(function (){
 			var id = $(this).children('iframe').attr("id");  
 
-			btn_vote.attr("id", "btn_vote" + id);  
-			btn_origin.attr("id", "btn_origin" + id);
+			btn_vote.attr("id", "btn_vote_" + id);  
+			btn_origin.attr("id", "btn_origin_" + id);
+			btn_info.attr("id", "btn_info_" + id);
 
-			$(this).after("<div align='center'>" + btn_vote.get(0).outerHTML + btn_origin.get(0).outerHTML + "</div>");
+			$(this).after("<div align='center'><div class='btn-group'>" + 
+				btn_vote.get(0).outerHTML + btn_origin.get(0).outerHTML +  btn_info.get(0).outerHTML + 
+				"</div></div>");
 		});
 
 		$("button[id^='btn_vote']").click(function(e){		
@@ -476,6 +480,21 @@ function initExhibition(theme) {
 				}
 			});			
 		});
+
+  		$("button[id^='btn_info']").click(function(e){		
+			var id =  $(this).attr("id").replace(/[^0-9]/ig, "");
+
+			$.each(canditates, function(i, d){
+				if (id === d.id) {
+					alert("编号：#"+ d.id + "\n" + 
+						  "名称:《" + d.name + "》\n" +
+						  "作者: " + d.author + " \n" +
+						  "介绍：" + d.description);
+					return false;
+				}
+			});			
+		});
+
 	}
 
   function drawBar(id, dataList, legendId, barNumber) {
@@ -501,6 +520,8 @@ function initExhibition(theme) {
       data.datasets[0].highlightStroke = "rgba(220,220,220,1)";
       data.datasets[0].strokeColor     = "rgba(220,220,220,0.8)";  
     });    
+
+    console.log(data);
 
     ctx = $("#" + id).get(0).getContext("2d");
     var chart =  new Chart(ctx).Bar(data, {responsive: false, barValueSpacing:10, scaleFontColor: "#222", barDatasetSpacing:30, scaleLineColor: "#FFF",});
@@ -685,10 +706,5 @@ var g_theme = {}; 	//contains current theme data
 	}
 
 	initTheme();
-
-	function initContact() {
-		$('#btn_sendMsg').submit()
-	}
-
 
 });
