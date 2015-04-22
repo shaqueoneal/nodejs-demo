@@ -461,7 +461,7 @@ function initExhibition(theme) {
 					$('a[href="#outcome"]').click();
 	        	}	        	
 
-	        	$.cookie('vote', jsonStr);
+	        	$.cookie('vote', jsonStr, {expires: 180});
 	        });
 
 			return false;
@@ -531,16 +531,12 @@ function initExhibition(theme) {
 
     var chart =  new Chart(ctx).Bar(data, {responsive: false, barValueSpacing:10, scaleFontColor: "#222", barDatasetSpacing:30, scaleLineColor: "#FFF",});
 
-    // $.each(dataList, function(i, d) {
-    //   if (i >= barNumber) {
-    //     return false;
-    //   }
-      
-    //   chart.datasets[0].bars[i].fillColor = getBarColor(dataList[i].value); 
-    //   chart.datasets[0].bars[i].highlightFill = getColorHighlight(getBarColor(dataList[i].value));    
-    // });    
+    $.each(dataList, function(i, d) {
+      chart.datasets[0].bars[i].fillColor = getColor(i); 
+      chart.datasets[0].bars[i].highlightFill = getHighlightColor(getColor(i));    
+    });    
 
-    // chart.update();
+    chart.update();
 
     return chart;
   }
