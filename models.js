@@ -174,7 +174,7 @@ function set(entity, cb) {
 		}
 		else {
 			//update
-			self.del(entity.id, function (err, ret) {
+			self.del({id: entity.id}, function (err, ret) {
 				// console.log(entity);
 				if (err) {
 					console.log(err);

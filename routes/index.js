@@ -136,7 +136,7 @@ router.get('/user_vote', function(req, res, next) {
 
 /* POST user vote . */
 router.post('/user_vote', function(req, res, next) {
-  console.log(req.body);
+    // console.log(req.body);  
     if ("getActiveThemes" == req.body.method) {
       if ("all" == req.query.themes) {
         Theme.get(function(err, docs) {
@@ -192,6 +192,7 @@ router.post('/user_vote', function(req, res, next) {
       });
     }
     else if ("vote" == req.body.method) {
+      console.log(req.body);  
       var vote = {
         id: req.body.theme + req.ip,
         userId: (req.body.userId ? req.body.userId : req.ip),
