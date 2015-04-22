@@ -104,7 +104,9 @@ function add(entity, cb) {
 				if (err) {
 					console.log(err);
 				}
-
+				else {
+					entity.save();
+				}
 				cb ? cb(err, doc) : undefined;
 			});				
 		}

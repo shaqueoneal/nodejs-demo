@@ -355,7 +355,7 @@ function initPage(candidates, pageNum, numPerPage) {
 
 		for (var j = 0; j < columNum; j++) {
 			var colum = $('<div class="col-xs-12 col-md-' + (12 / columNum) + '"></div>');
-			var iframe = $('<iframe class="full" scrolling="no"></iframe>');
+			var iframe = $('<iframe class="full" scrolling="auto"></iframe>');
 			// console.log(colum.get(0).outerHTML);
 
 			iframe.attr("src", candidates[k].url);  

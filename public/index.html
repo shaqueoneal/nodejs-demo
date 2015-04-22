@@ -1,528 +1,314 @@
 <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> 
+<![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" lang="en"> 
+<![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+    <head>
 
-<head>
-	<title>投啊</title>
-	<meta name="keywords" content="" />
-	<meta name="description" content="" />
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>I vote</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta charset="UTF-8">
+
+        <!-- CSS Bootstrap & Custom -->
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="css/animate.css" rel="stylesheet" media="screen">
+        <link href="css/templatemo_style.css" rel="stylesheet" media="screen">
+       
+        <!-- JavaScripts -->
+        <script src="js/jquery-1.10.2.min.js"></script>
+        <script src="js/jquery.cookie.js"></script>
+        <script src="js/modernizr.js"></script>
+        <!--[if lt IE 8]>
+	    <div style=' clear: both; text-align:center; position: relative;'>
+            <a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" alt="" /></a>
+        </div>
+        <![endif]-->
+    </head>
+    <body>
+	<!-- Preloader -->
+	<div id="page-preloader">
+	    <div id="spinner"></div>
+	</div>
+	<!-- End Preloader -->
 	
-	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link href="css/magnific-popup.css" rel="stylesheet"> 
-<!-- 	<link href="css/templatemo_style.css" rel="stylesheet" type="text/css">	 -->
-	<link href="stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
-
-	<style type="text/css">
-		iframe.full {
-			width:1440px;
-			height:900px;
-			-webkit-transform:scale(0.2);
-			-webkit-transform-origin:left top;
-		}
-
-    .doughnut-legend {
-      list-style: none;
-      position: absolute;
-      right: -10px;
-      top: 0;
-    }
-
-    .doughnut-legend li {
-      display: block;
-      padding-left: 30px;
-      position: relative;
-      margin-bottom: 4px;
-      border-radius: 5px;
-      padding: 2px 8px 2px 28px;
-      font-size: 14px;
-      cursor: default;
-      -webkit-transition: background-color 200ms ease-in-out;
-      -moz-transition: background-color 200ms ease-in-out;
-      -o-transition: background-color 200ms ease-in-out;
-      transition: background-color 200ms ease-in-out;
-    }
-    .doughnut-legend li span {
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 20px;
-      height: 100%;
-      border-radius: 5px;
-    }
-
-	</style>	
-</head>
-<body calss="landing">
-	<div class="well">	
-		<h1>投啊<small>——大家都来投票吧！</small></h1>
-		<h3 class="center-text">UIS 首页评选，每人限投一票，把选票投给您最满意的作品吧！</h3>
-		<button class="btn btn-primary btn-lg" id="btn_enter">点击进入</button>
+	<!-- Mobile Menu -->
+	<div id="mobile-menu" class="mobile-nav hide-nav hidden-md hidden-lg">
+	    <div class="mobile-menu-close">
+		<button type="button" class="close" aria-hidden="true"><span>Close</span>&times;</button>
+	    </div>
+	   
+		<ul class="mobile-navigation">
+		    <li><a href="#introduction">首页</a></li>
+		    <li style='display: none'><a href="#exhibition">作品展示</a></li>
+		    <li style='display: none'><a href="#outcome">评选结果</a></li>
+		    <li style='display: none'><a href="#partners">Partners</a></li>
+		    <li style='display: none'><a href="#our-team">Our Team</a></li>
+		    <li><a href="#contact">联系我们</a></li>
+		</ul>
+		
+<!-- 		<ul class="mobile-social-icons">
+		    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+		    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+		    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+		    <li><a href="#"><i class="fa fa-rss"></i></a></li>
+		</ul> -->
+	    
 	</div>
 
-	<div class="container">
+        <!-- Header -->
+        <header id="header" class="site-header" role="banner">
+	    <div class="container">
 		<div class="row">
-			<ul class="nav nav-tabs">
-				<li role="presentation" class="active"><a href="#">首页</a></li>
-				<li role="presentation"><a href="#">结果</a></li>
-				<li role="presentation"><a href="#">关于</a></li>
+		    
+		    <div class="col-md-4">
+		    <font size=7 color="#000">I</font>  <font size=6 color="#000"> v<font color="#F00">❤</font>te</font>
+				<span>&nbsp &nbsp 一个专业展示作品和投票的网站</span>
+			<a href="#">
+
+			    <!-- <img src="images/logo.png" alt="Impressum Template" title="Impressum Parallax Template"> -->
+			</a>
+		    </div> <!-- //.logo -->
+		    
+		    <div class="col-md-8">
+			<nav id="navigation" class="hidden-sm hidden-xs">
+			    <ul id="main-nav" class="main-navigation">
+				<li class="current"><a href="#introduction">首页</a></li>
+				<li style='display: none'><a href="#exhibition">作品展示</a></li>
+				<li style='display: none'><a href="#outcome">评选结果</a></li>
+				<li style='display: none'><a href="#partners">Partners</a></li>
+				<li style='display: none'><a href="#our-team">Our Team</a></li>
+				<li><a href="#contact">联系我们</a></li>
+			    </ul>
+			</nav>
+			
+			<a href="#mobile-menu" class="visible-xs visible-sm mobile-menu-trigger"><i class="fa  fa-reorder"></i></a>
+			
+		    </div>
+		    
+		</div> <!-- //.row -->
+	    </div> <!-- //.container -->
+            
+        </header>
+	<!-- End Header -->
+	
+	<!-- Introduction Section -->
+	<section id="introduction" class="content-section clearfix">
+	    <div class="flexslider introduction-slider">
+		
+		<ul class="slides">
+<!-- 		    <li> 
+			<div class="flex-caption section-overlay slide-caption">
+			    <div class="container">
+				<div class="row">
+				    <div class="col-md-12">
+					<h2>
+					    UIS 登陆页面评选 火热进行中，动动您的手指，选出心中所爱吧！<br>
+					    无需注册，直接点击下方按钮参与投票
+					</h2>
+					<a class="slide-button" id="btn-theme-1">UIS 首页评选</a>
+				    </div>
+				</div>
+			    </div>
+			</div> 
+			<img src="images/slides/slide1.jpg" alt="slide-01">  
+		    </li>
+		     -->
+		   <!--  <li> 
+			<div class="flex-caption section-overlay slide-caption">
+			    <div class="container">
+				<div class="row">
+				    <div class="col-md-12">
+					<h2>
+					    Nullam euismod erat eget mi tincidunt malesuada<br>
+					    Aliquam sed est volutpat turpis condimentum
+					</h2>
+					<a class="slide-button">View Project</a>
+				    </div>
+				</div>
+			    </div>
+			</div> 
+			<img src="images/slides/slide2.jpg" alt="slide-02">    
+		    </li>
+		    
+		    <li> 
+			<div class="flex-caption section-overlay slide-caption">
+			    <div class="container">
+				<div class="row">
+				    <div class="col-md-12">
+					<h2>
+					    Proin quis nunc nec turpis ultrices aliquet<br>
+					    Vestibulum placerat placerat eros
+					</h2>
+					<a class="slide-button">View Project</a>
+				    </div>
+				</div>
+			    </div>
+			</div> 
+			<img src="images/slides/slide3.jpg" alt="slide-03">    
+		    </li> -->
+		</ul>
+
+		<div class="slide-navigation" style="display: none">
+		    <a href="#" class="slide-prev"><i class="fa fa-arrow-left"></i></a>
+		    <a href="#" class="slide-next"><i class="fa fa-arrow-right"></i></a>
+		</div>
+		
+	    </div> <!-- //.flexslider -->
+	</section>
+
+	<section id="exhibition" class="content-section clearfix" style="display: none">
+		<div class="container"> 
+			<div class="row">
+			    <div class="col-md-12">
+				<h2 class="section-title left">作品展示</h2>
+			    </div>
+			</div>
+		</div>
+	</section>
+
+	<section id="outcome" class="content-section clearfix" style="display: none">
+		<div class="container"> 		
+			<div class="row">
+			    <div class="col-md-12">
+				<h2 class="section-title left">评选结果</h2>
+			    </div>
+			</div>
+			<div class="row">
+			    <div class="col-md-12">
+					<div class="row">
+						<div class="col-md-2"></div>
+						<div class="col-md-4">
+							<canvas id="cvs_votes_bar" width="400" height="300"></canvas>									
+						</div>				
+						<div class="col-md-4">
+							<canvas id="cvs_votes_pie" height="300"></canvas>							
+						</div>
+						<div class="col-md-2">
+							<ul id="legend"></ul>
+						</div>
+				    </div>
+			    </div>
+			</div>
+		</div>
+	</section>
+	
+	<!-- exhibition Section -->
+	
+	<!-- Contact Section -->
+	<section id="contact" class="content-section" >
+	    <div class="container">
+		<div class="row">
+		    <div class="col-md-12">
+			<h2 class="section-title left">联系我们</h2>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-6 contact-form">
+			<form id="email-form" action="user_message" method="post">
+			    <div class="row">
+				<div class="col-md-6">
+				    <label for="name">姓名</label>
+				    <input type="text" class="form-input" name="name" id="name">
+				</div>
+				<div class="col-md-6">
+				    <label for="email">邮箱</label>
+				    <input type="email" class="form-input" name="email" id="email">
+				</div>
+			    </div>
+			    <div class="row">
+				<div class="col-md-12">
+				    <label for="message">消息</label>
+				    <textarea rows="6" id="message" name="message" class="form-input"></textarea>
+				</div>
+			    </div>
+			    <div class="row">
+				<div class="col-md-12">
+				    <button class="main-button" type="submit" id="btn_sendMsg">发送消息</button>
+				</div>
+			    </div>
+			</form>
+			
+		    </div>
+		    <div class="col-md-5 col-md-offset-1 contact-info">
+			<h4>愿景</h4>
+			<p>利用业余时间做了这个投票网站，希望能够成为UIS乃至公司的作品展示和投票平台，大家在使用过程中有任何意见和建议可以通过左边输入框发送消息或者直接通过以下联系方式反馈给我，同时希望感兴趣的同学可以一起加入该网站的开发。
+			</p>
+			
+			<h4>联系方式</h4>
+			<ul>
+			    <li><i class="fa fa-map-marker"></i>A18-C11</li>
+			    <li><i class="fa fa-phone"></i>31240</li>
+			    <li><i class="fa fa-envelope"></i><a href="mailto:">shenlu_zhao@163.com</a></li>
 			</ul>
+			
+		    </div>
 		</div>
-	</div>
+	    </div>
+	</section>
+	<!-- End Contact Section -->
+	
+	<!-- Hidden Content -->
+	<section id="load-folio" class="folio-details">
+	    <div id="folio-content" class="load-folio-content">
+		
+	    </div>
+	</section>
+	
+        <footer id="footer" class="site-footer" role="contentinfo">
+			<div class="container">
+                <div class="col-md-6 col-sm-6">
+                    <div class="copyright-text">
+                        <span>Copyright &copy; 2015 by zhaoshenglu </span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+<!--                     <div class="social-icons">
+                        <ul>
+                            <li><a href="#" class="fa fa-facebook"></a></li>
+                            <li><a href="#" class="fa fa-twitter"></a></li>
+                            <li><a href="#" class="fa fa-linkedin"></a></li>
+                            <li><a href="#" class="fa fa-rss"></a></li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+        </footer>
+	
 
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-md-3">
-					<div class="embed-responsive embed-responsive-4by3 detail">
-						<iframe class="full" src="http://10.99.73.184:7042/index-200px.html" scrolling="no"></iframe>
-					</div>
-					<div>
-						<button class="btn btn-success" id="btn_vote">投他一票</button>
-						<button class="btn btn-primary" id="btn_origin">查看原稿</button>
-					</div>
-				</div>
+        <!-- JavaScripts -->
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/popwin.js"></script>
+        <script src="js/Chart.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/custom.js"></script>
 
-				<div class="col-xs-12 col-md-3">
-					<div class="embed-responsive embed-responsive-4by3">
-						<iframe class="full" src="http://10.99.73.184:7042/index-160px.html" scrolling="no"></iframe>
-					</div>
-				</div>
-				<div class="col-xs-12 col-md-3">
-					<div class="embed-responsive embed-responsive-4by3">
-						<iframe class="full" src="http://10.99.73.184:7042/index-120px.html" scrolling="no"></iframe>
-					</div> 
-				</div>
-				<div class="col-xs-12 col-md-3">
-					<div class="embed-responsive embed-responsive-4by3">
-						<iframe class="full" src="http://10.99.73.184:7042/index-100px.html" scrolling="no"></iframe>
-					</div> 
-				</div>
-			</div>
-			<br/>
-			<br/>
-			<div class="row">
-				<div class="col-xs-12 col-md-3">
-					<div class="embed-responsive embed-responsive-4by3">
-						<iframe class="full" src="http://10.99.73.184:7042/index-200px.html" scrolling="no"></iframe>
-					</div>
-					<div>
-						<button class="btn btn-success" id="btn_vote">投他一票</button>
-						<button class="btn btn-primary" id="btn_origin">查看原稿</button>
-					</div>
-				</div>
-				<div class="col-xs-12 col-md-3">
-					<div class="embed-responsive embed-responsive-4by3">
-						<iframe class="full" src="http://10.99.73.184:7042/index-160px.html" scrolling="no"></iframe>
-					</div>
-				</div>
-			</div>
-			<header>
-				<h3>投票结果</h3>
-			</header>
-			<div class="row well">
-				<div class="col-md-2"></div>
-				<div class="col-md-4">
-					<canvas id="cvs_votes_bar" height="220"></canvas>									
-				</div>				
-				<div class="col-md-4">
-					<canvas id="cvs_votes_pie" height="220"></canvas>
-					<ul id="legend"></ul>	
-				</div>
-				<div class="col-md-2"></div>
-			</div>
-
-
-		</div>
-
-
-<!-- 		<div id="portfolio-content" class="center-text">
-			<div class="portfolio-page" id="page-1">
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/1-large.jpg">
-						<img src="images/1-small.jpg" alt="image 1">
-						<div class="detail">
-							<h3>Wavy Road</h3>
-							<p>Duis ac </p>
-							<span class="btn" id="btn_vote">投票</span><br/>
-							<span class="btn" id="btn_view">查看原网页</span>	
-						</div>
-					</a>
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/2-large.jpg">
-						<img src="images/2-small.jpg" alt="image 2">
-						<div class="detail">
-							<h3>Rocky Mountain</h3>
-							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/3-large.jpg">
-						<img src="images/3-small.jpg" alt="image 3">
-						<div class="detail">
-							<h3>Clear River</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/4-large.jpg">
-						<img src="images/4-small.jpg" alt="image 4">
-						<div class="detail">
-							<h3>Rounded Flower</h3>
-							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/5-large.jpg">
-						<img src="images/5-small.jpg" alt="image 5">
-						<div class="detail">
-							<h3>Bustling City</h3>
-							<p>Duis ac laoreet mi. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus. Curabitur non est neque.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/6-large.jpg">
-						<img src="images/6-small.jpg" alt="image 6">
-						<div class="detail">
-							<h3>Retired Leaves</h3>
-							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/7-large.jpg">
-						<img src="images/7-small.jpg" alt="image 7">
-						<div class="detail">
-							<h3>Clean Design</h3>
-							<p>Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/8-large.jpg">
-						<img src="images/8-small.jpg" alt="image 8">
-						<div class="detail">
-							<h3>Rock Solid</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-			</div>
-			<div class="portfolio-page" id="page-2" style="display:none;">
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/8-large.jpg">
-						<img src="images/8-small.jpg" alt="image 8">
-						<div class="detail">
-							<h3>Wavy Road</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Sed in molestie lectus. Curabitur non est neque.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/7-large.jpg">
-						<img src="images/7-small.jpg" alt="image 7">
-						<div class="detail">
-							<h3>Rocky Mountain</h3>
-							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet. Duis ac laoreet mi.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/6-large.jpg">
-						<img src="images/6-small.jpg" alt="image 6">
-						<div class="detail">
-							<h3>Clear River</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/5-large.jpg">
-						<img src="images/5-small.jpg" alt="image 5">
-						<div class="detail">
-							<h3>Rounded Flower</h3>
-							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/4-large.jpg">
-						<img src="images/4-small.jpg" alt="image 4">
-						<div class="detail">
-							<h3>Bustling City</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-                
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/3-large.jpg">
-						<img src="images/3-small.jpg" alt="image 3">
-						<div class="detail">
-							<h3>Retired Leaves</h3>
-							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/2-large.jpg">
-						<img src="images/2-small.jpg" alt="image 2">
-						<div class="detail">
-							<h3>Clean Design</h3>
-							<p>Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/1-large.jpg">
-						<img src="images/1-small.jpg" alt="image 1">
-						<div class="detail">
-							<h3>Rock Solid</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-			</div>
-			<div class="portfolio-page" id="page-3" style="display:none;">
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/3-large.jpg">
-						<img src="images/3-small.jpg" alt="image 3">
-						<div class="detail">
-							<h3>Wavy Road</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Curabitur non est neque.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/2-large.jpg">
-						<img src="images/2-small.jpg" alt="image 2">
-						<div class="detail">
-							<h3>Rocky Mountain</h3>
-							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet. Duis ac laoreet mi.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/4-large.jpg">
-						<img src="images/4-small.jpg" alt="image 4">
-						<div class="detail">
-							<h3>Clear River</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/1-large.jpg">
-						<img src="images/1-small.jpg" alt="image 1">
-						<div class="detail">
-							<h3>Rounded Flower</h3>
-							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet. </p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/5-large.jpg">
-						<img src="images/5-small.jpg" alt="image 5">
-						<div class="detail">
-							<h3>Bustling City</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Curabitur non est neque.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/6-large.jpg">
-						<img src="images/6-small.jpg" alt="image 22">
-						<div class="detail">
-							<h3>Retired Leaves</h3>
-							<p>Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/8-large.jpg">
-						<img src="images/8-small.jpg" alt="image 8">
-						<div class="detail">
-							<h3>Clean Design</h3>
-							<p>Vestibulum tincidunt libero urna, ut dignissim purus accumsan nec. Sed in molestie lectus. Curabitur non est neque. Maecenas id luctus ligula.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-				<div class="portfolio-group">
-					<a class="portfolio-item" href="images/7-large.jpg">
-						<img src="images/7-small.jpg" alt="image 7">
-						<div class="detail">
-							<h3>Rock Solid</h3>
-							<p>Duis ac laoreet mi. Maecenas non lorem sed elit molestie tincidunt. Maecenas id luctus ligula. Mauris dignissim ante eu arcu ultricies, at sodales orci aliquet.</p>
-							<span class="btn">View</span>
-						</div>
-					</a>				
-				</div>
-			</div> <!-- page 3	-->	
-<!-- 			<div class="pagination">
-				<ul class="nav">
-					<li class="active">1</li>
-					<li>2</li>
-					<li>3</li>
-				</ul>
-			</div>
-		</div>  
-		</div> -->	<!-- /.content-container -->	
-    <div>
-		<footer>
-			<button id='some-button'>some-button</button>
-			<p>Copyright &copy; 2015 by zhaoshenglu 07042 </p>
-<!-- 			<div class="social right">
-				<a href="#"><i class="fa fa-facebook"></i></a>
-				<a href="#"><i class="fa fa-twitter"></i></a>
-				<a href="#"><i class="fa fa-google-plus"></i></a>
-				<a href="#"><i class="fa fa-dribbble"></i></a>
-				<a href="#"><i class="fa fa-instagram"></i></a>
-				<a href="#"><i class="fa fa-linkedin"></i></a>
-			</div> -->
-		</footer>
-	</div>
-	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
-	<script type="text/javascript" src="js/modernizr.2.5.3.min.js"></script>
-	<script type="text/javascript" src="js/jquery.magnific-popup.min.js"></script> 
-	<script type="text/javascript" src="js/templatemo_script.js"></script>
-	<script type="text/javascript" src="javascripts/jquery.cookie.js"></script>
-	<script type="text/javascript" src="javascripts/popwin.js"></script>
-	<script type="text/javascript" src="javascripts/Chart.js"></script>
-
-	<script type="text/javascript">
-		$(function () {
-			// $('.pagination li').click(changePage);
-			// $('.portfolio-item').magnificPopup({ 
-			// 	type: 'iframe',
-			// 	gallery:{
-			// 		enabled:true
-			// 	}
-			// });
-
-	      var ctx = $("#cvs_votes_bar").get(0).getContext("2d");
+<script type="text/javascript">
+		  // var ctx = $("#cvs_votes_bar").get(0).getContext("2d");
 	      
-	      var data = {
-	        labels: ["VM1", "VM2", "VM3"],
-	        datasets: [
-	        {
-	          label: "My First dataset",
-	          fillColor: "#5cb85c",
-	          strokeColor: "rgba(220,220,220,0.8)",
-	          highlightFill: "#5AD3D1",
-	          highlightStroke: "rgba(220,220,220,1)",
-	          data: [80, 70, 60]
-	        },
-	        ]
-	      };
+	   //    var data = {
+	   //      labels: ["VM1", "VM2", "VM3"],
+	   //      // labels: ["VM1"],
+	   //      datasets: [
+	   //      {
+	   //        label: "My First dataset",
+	   //        fillColor: "#5cb85c",
+	   //        strokeColor: "rgba(220,220,220,0.8)",
+	   //        highlightFill: "#5AD3D1",
+	   //        highlightStroke: "rgba(220,220,220,1)",
+	   //        data: [80, 70, 60]
+	   //        // data: [80]
+	   //      },
+	   //      ]
+	   //    };
 
-	      new Chart(ctx).Bar(data, {responsive: true, barValueSpacing: 30, scaleFontColor: "#222",});
+	   //    new Chart(ctx).Bar(data, {responsive: true, barValueSpacing: 30, scaleFontColor: "#222",barDatasetSpacing: 30});
 
-	      var portCounts = [
-	        {
-	          value:     100, 
-	          label:     'GE',
-	          color:     "red",
-	          highlight: "#5AD3D1",
-	        },
-	        {
-	          value:     200, 
-	          label:     'XGE',
-	          color:     "green",
-	          highlight: "#5AD3D1",
-	        },
-	        {
-	          value:     40, 
-	          label:     'FGE',
-	          color:     "yellow",
-	          highlight: "#5AD3D1",
-	        },
-	      ];
+</script>
 
-	      ctx = $("#cvs_votes_pie").get(0).getContext("2d");
-		    var pie = new Chart(ctx).Doughnut(portCounts, {responsive: true, UserSet: true, percentageInnerCutout: 0, tip:'%', 
-          legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><% console.log(segments[i]); if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-        });
-
-		  $("#legend").append(pie.generateLegend());
-
-		  $('#btn_enter').click(function(e){
-		  		var jsonData = {
-					"theme":    "uis",
-				};	
-
-				sendJsonData('user_vote/', 'GET', jsonData, function (data) {
-		          	console.log(data);
-		        	
-		        	$.cookie('vote', jsonStr);
-		        });
-		    });
-
-			$('#btn_origin').click(function(e){
-				var height =  (768 < screen.availHeight) ? 768 : (screen.availHeight - 120);
-				var width = height * 16 / 10;
-
-				popWin.showWin(width, height ,"通用的iframe弹层插件","http://10.99.73.184:7042/index-200px.html");
-			});
-
-			$('#btn_vote').click(function(e){		
-				var jsonData = {
-					"theme":    "uis",
-					"no":       "1",
-					"title":    "200px",
-					"comments": "test"
-				};				
-
-				var jsonStr = JSON.stringify(jsonData);
-
-				if ($.cookie('vote')) {
-					var cookieData = JSON.parse($.cookie('vote'));
-
-					if (jsonData.no != cookieData.no) {
-						if (!confirm("您已经投过票了，重新投票的话上次投票会作废，确定要重新投票吗？")){
-							return false;
-						};
-					}
-				}
-
-				sendJsonData('user_vote/', 'POST', jsonData, function (data) {
-		          	console.log(data);
-		        	alert("您投了 " + jsonData.no + "# 作品" + (jsonData.title ? " :《" + jsonData.title + "》":"") + "一票，感谢您的参与，现在您可以查看投票结果！");
-
-		        	$.cookie('vote', jsonStr);
-		        });
-
-				return false;
-
-			});
-
-		});
-	</script>	
-</body>
+    </body>
 </html>

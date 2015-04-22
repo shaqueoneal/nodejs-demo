@@ -1,0 +1,7 @@
+killall node
+killall mongod
+
+for pid in `ps -e | grep runmetro | awk '{print $1}'` ;
+do
+	(pwdx ${pid} | grep z07042) && kill -9 ${pid} 
+done

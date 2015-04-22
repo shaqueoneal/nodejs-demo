@@ -1,0 +1,4 @@
+
+cd /home/share/z07042/Vote/
+(nohup mongod --dbpath /home/share/z07042/data/ &) && ((nohup npm start)&) 
+cd /home/share/z07042/branch/ && (runmetro.sh&)
