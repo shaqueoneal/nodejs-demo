@@ -41,6 +41,11 @@ var _Theme = new Schema({
 	}],
 });
 
+var _BrowseCount = new Schema({
+	themeId: String,
+	count: { type: Number, default: 0 },
+});
+
 // candidate is a work in the theme
 var _Candidate = new Schema({
 	id: String,		//begins with 1
@@ -88,6 +93,7 @@ var Vote = mongoose.model('Vote', _Vote);
 var Theme = mongoose.model('Theme', _Theme);
 var Candidate = mongoose.model('Candidate', _Candidate);
 var UserMsg = mongoose.model('UserMsg', _UserMsg);
+var BrowseCount = mongoose.model('BrowseCount', _BrowseCount);
 
 function add(entity, cb) {
 	if (!entity.id) {
@@ -182,13 +188,14 @@ function set(entity, cb) {
 	});
 }
 
-UserMsg.add = Vote.add = Theme.add = User.add = add;
-UserMsg.del = Vote.del = Theme.del = User.del = del;
-UserMsg.get = Vote.get = Theme.get = User.get = get;
-UserMsg.set = Vote.set = Theme.set = User.set = set;
+BrowseCount.add = UserMsg.add = Vote.add = Theme.add = User.add = add;
+BrowseCount.del = UserMsg.del = Vote.del = Theme.del = User.del = del;
+BrowseCount.get = UserMsg.get = Vote.get = Theme.get = User.get = get;
+BrowseCount.set = UserMsg.set = Vote.set = Theme.set = User.set = set;
 
 // export them
 exports.User = User;
 exports.Vote = Vote;
 exports.Theme = Theme;
 exports.UserMsg = UserMsg;
+exports.BrowseCount = BrowseCount;

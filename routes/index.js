@@ -7,6 +7,7 @@ var User = models.User;
 var Theme = models.Theme;
 var Vote = models.Vote;
 var UserMsg = models.UserMsg;
+var BrowseCount = models.BrowseCount;
 
 mongoose.connect('mongodb://localhost/user_vote');
 
@@ -41,7 +42,7 @@ var g_candidates = [
     id: 4,
     name: "小巧玲珑",
     author: "zhaoshenglu",
-    url: "http://10.99.73.184:7042/index-120px.html",
+    url: "http://10.99.73.184:7042/index-100px.html",
     description: "",
   },
   {
