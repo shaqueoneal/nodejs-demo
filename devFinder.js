@@ -1,0 +1,140 @@
+
+var request = require('request');
+var childProcess = require('child_process');
+
+
+/* find devices in net */
+var netAllDevs = [
+	{
+		netName: "192.168.1.0",
+		netDevs: [],	//x.x.x.1~x.x.x.254
+		bSearching: false,
+	},
+	{
+		netName: "192.168.2.0",
+		netDevs: [],	//x.x.x.1~x.x.x.254
+		bSearching: false,
+	},
+	{
+		netName: "192.168.3.0",
+		netDevs: [],	//x.x.x.1~x.x.x.254
+		bSearching: false,
+	},	
+	{
+		netName: "192.168.4.0",
+		netDevs: [],	//x.x.x.1~x.x.x.254
+		bSearching: false,
+	},
+];
+
+var g_netIndex = 0;
+
+
+function getDevType(ip) {
+	request('http://' + ip, function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	    console.log(body) // Show the HTML for the Google homepage. 
+	  }
+	});
+}
+
+//Find all dev in netIp of format "192.168.x.0"
+function findDevInNet(netIp) {
+	var netDev;
+	for (var j = 0; j < netAllDevs.length; j++) {
+		if (netAllDevs[j].netName == netIp) {
+			netDev = netAllDevs[j];
+		}
+	}
+
+	if (!netDev) {
+		netDev = {
+			netName: netIp,
+			netDevs: [],	//x.x.x.1~x.x.x.254
+			bSearching: false,
+		};
+	}
+
+	if (netDev.bSearching) {
+		console.log('searching:' + netIp);
+		return;
+	}
+
+	netDev.bSearching = true;
+	console.log("searching net: " + netIp);	
+
+	// x.x.x.1~x.x.x.254
+	for (var i = 1; i < 255; i++) {
+		(function(i){
+			childProcess.exec('ping -w 1 ' +　(netIp.substring(0, netIp.length-1) + i), 
+			function (error, stdout, stderr) {
+				if (error) {
+					netDev.netDevs[i - 1] = -1; 
+				}
+				else {
+					console.log(i);
+					netDev.netDevs[i - 1] = 1;
+					console.log('Child Process STDOUT: '+ stdout);
+
+					getDevType((netIp.substring(0, netIp.length-1) + i));
+				}			
+			});
+		})(i);
+	}	
+}
+
+function isNetPolled(netIp) {
+	for (var i = 0; i < netAllDevs.length; i++) {
+		if (netAllDevs[i].netName == netIp) {
+			for (var j = 0; j < 254; j++) {
+				if (undefined == netAllDevs[i].netDevs[j]) {
+					console.log("net: " + netIp + " not polled");
+					break;
+				}		
+			}
+
+			if (j == 254) {
+				netAllDevs[i].bSearching = false;
+				
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+function getDevInNet(netIp) {
+	console.log(netDevs);
+	return netDevs;
+}
+
+//netIp is in format of "192.168.1.0"
+function initDevFind() {
+	setInterval(function(){
+		if (isNetPolled(netAllDevs[g_netIndex].netName)) {
+			if (netAllDevs[g_netIndex + 1]) {
+				g_netIndex += 1;
+			}
+			else {
+				g_netIndex = 0;
+				// a round over, genetate html page
+			}
+		}
+		else {			
+			findDevInNet(netAllDevs[g_netIndex].netName);
+		}
+		
+	}, 5000);	//5 seconds check if one net is polled
+
+	setInterval(function(){
+		for (var i = 0; i < netAllDevs.length; i++) {
+			netAllDevs[i].netDevs = [];
+		}
+		
+		g_netIndex = 0;	
+	}, 1000 * 60 * 2); //10 minutes refresh
+}
+
+exports.initDevFind = initDevFind;
+exports.getDevInNet = getDevInNet;
