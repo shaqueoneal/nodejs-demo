@@ -29,13 +29,29 @@ var netAllDevs = [
 
 var g_netIndex = 0;
 
-
 function getDevType(ip) {
-	request('http://' + ip, function (error, response, body) {
-	  if (!error && response.statusCode == 200) {
-	    console.log(body) // Show the HTML for the Google homepage. 
-	  }
-	});
+	var options = {
+		headers: {"Connection": "close"},
+	    // url: 'http://127.0.0.1:3005/Config',
+	    url: 'http://' + ip + '/uism',
+	    method: 'POST',
+	    json:true,
+	    body: {data:{channel : "aaa",appkey : "bbb"},sign : "ccc",token : "ddd"}
+	};
+
+	function callback(error, response, data) {
+	    if (!error && response.statusCode == 200) {
+	        console.log('----info------',data);
+
+	        for (var i = 0; i < netAllDevs.length; i++) {
+	        	if (ip.indexOf(netAllDevs[i].netName.substring(0, netAllDevs[i].netName.length - 2)) >= 0) {
+	        		netAllDevs[i].netDev[ip.split('.')[3] - 1] = data.type;
+	        	}
+	        }
+	    }
+	}
+
+	request(options, callback);
 }
 
 //Find all dev in netIp of format "192.168.x.0"
