@@ -125,6 +125,26 @@ function getDevInNet(netIp) {
 	return netDevs;
 }
 
+
+var g_devList = [];
+
+function saveDevList() {
+	g_devList = [];
+
+	for (var i = 0; i < netAllDevs.length; i++) {
+		for (var j = 0; j < 254; j++) {
+			var netIp = netAllDevs[i].netName;
+			var dev = {
+				ip : (netIp.substring(0, netIp.length-1) + (j + 1)),
+				type: netAllDevs[i].netDevs[j],
+				status: netAllDevs[i].netDevs[j],
+			}
+
+			g_devList.push(dev);		
+		}
+	}
+}
+
 //netIp is in format of "192.168.1.0"
 function initDevFind() {
 	setInterval(function(){
@@ -134,7 +154,8 @@ function initDevFind() {
 			}
 			else {
 				g_netIndex = 0;
-				// a round over, genetate html page
+				// a round over, save data
+				saveDevList();
 			}
 		}
 		else {			
