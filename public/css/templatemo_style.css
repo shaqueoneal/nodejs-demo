@@ -2065,3 +2065,17 @@ iframe.full {
   height: 100%;
   border-radius: 5px;
 }
+
+#marquee {
+  height:300px; 
+  overflow:hidden;
+}
+#marquee ul {
+  list-style:none
+}
+#marquee ul li {
+  float:left; 
+  padding-bottom:20px; 
+  line-height:20px; 
+  width: 100%;
+}
