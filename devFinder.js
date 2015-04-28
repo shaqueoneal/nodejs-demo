@@ -1,7 +1,8 @@
 
 var request = require('request');
 var childProcess = require('child_process');
-
+var fs = require('fs');
+var path = require('path');
 
 /* find devices in net */
 var netAllDevs = [
@@ -125,11 +126,8 @@ function getDevInNet(netIp) {
 	return netDevs;
 }
 
-
-var g_devList = [];
-
 function saveDevList() {
-	g_devList = [];
+	var devList = [];	
 
 	for (var i = 0; i < netAllDevs.length; i++) {
 		for (var j = 0; j < 254; j++) {
@@ -140,9 +138,21 @@ function saveDevList() {
 				status: netAllDevs[i].netDevs[j],
 			}
 
-			g_devList.push(dev);		
+			if (1 === dev.status) {
+				devList.push(dev);	
+			}				
 		}
 	}
+
+	var json = {data : devList};
+
+	fs.writeFile(path.join(__dirname, 'public/ajax/devList.json'), JSON.stringify(json), function (err) {
+        if (err) {
+        	console.log(err);
+        }
+
+        console.log("Export dev list success!");
+    });
 }
 
 //netIp is in format of "192.168.1.0"
@@ -155,7 +165,7 @@ function initDevFind() {
 			else {
 				g_netIndex = 0;
 				// a round over, save data
-				saveDevList();
+				
 			}
 		}
 		else {			
@@ -165,12 +175,14 @@ function initDevFind() {
 	}, 5000);	//5 seconds check if one net is polled
 
 	setInterval(function(){
+		saveDevList();
+
 		for (var i = 0; i < netAllDevs.length; i++) {
 			netAllDevs[i].netDevs = [];
 		}
 		
 		g_netIndex = 0;	
-	}, 1000 * 60 * 2); //10 minutes refresh
+	}, 1000 * 60 * 1); //10 minutes refresh
 }
 
 exports.initDevFind = initDevFind;

@@ -577,6 +577,7 @@ function initExhibition(theme) {
 		return pie;
 	}
 
+	// display votes in marquee
 	function showResultDetail(themeId) {
 		var jsonData = {
 			"method":   "getResultDetail",
@@ -601,7 +602,10 @@ function initExhibition(theme) {
 						detailRecord.voteDate = d.date;
 						voteDetailRecords.push(detailRecord);
 					});
-					
+
+					var str = detailRecord.userId + " 投了《" + detailRecord.workName + "》一票";	
+
+					$('#mq_vote').append('<p>' + str + '</p>');			
 				}
 			});
 		});
@@ -630,7 +634,6 @@ var g_pie;
 				var vote = {};
 				vote.label = g_theme.candidates[i].name;
 				vote.value = d;
-
 				voteRecords.push(vote);
 			});
 
@@ -687,7 +690,8 @@ var g_theme = {}; 	//contains current theme data
 
 		      		// already voted
 					if ($.cookie('vote')) {
-			      		showResult(themeId);	      		
+			      		showResult(themeId);
+			      		showResultDetail(themeId);	
 		      		}
 
 		      	});
