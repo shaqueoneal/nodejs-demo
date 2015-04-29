@@ -5,6 +5,9 @@ var models = require('../models')
 var childProcess = require('child_process');
 var isIPv6 = require('net').isIPv6;
 
+// var app =  require('../app');
+var session = require('express-session');
+
 var User = models.User;
 var Theme = models.Theme;
 var Vote = models.Vote;
@@ -84,8 +87,55 @@ Theme.set(themeObj, function (err, doc) {
   }
 });
 
-router.get('/user_vote', function(req, res, next) {   
-  console.log(req);
+// router.use('/', function(req, res, next) {
+//   var user = req.session.user;
+//   console.log('ggggggg');
+//   var userObj = {
+//     id: req.ip,
+//     name : req.ip,
+//     ip : req.ip,
+//     email : "",
+//     password : ""
+//   };
+
+//   user = userObj;
+
+//   User.add(userObj, function (err, doc) {});
+
+//   var ip = req.ip;
+
+//   if (isIPv6(req.ip)) {
+//     ip = req.ip.slice(7);
+//   }
+
+//   childProcess.exec('nmblookup -A ' + ip, 
+//     function (error, stdout, stderr) {
+//       if (error) {
+//         console.log("cannot get " + ip + "'s host name"); 
+//       }
+//       else {
+//         console.log(stdout);
+
+//         User.del(userObj, function (err, doc) {
+//           if (err) {
+//             return;
+//           }
+
+//           userObj.id = stdout.split('\n')[1].split(' ')[0].trim();
+//           userObj.name = userObj.id;
+
+//           user = userObj;
+//           User.add(userObj, function (err, doc) {});
+//         });
+//       }     
+//   });
+
+//   next();
+// });
+
+
+router.get('/user_vote', function(req, res, next) {
+  // console.log(req);
   if ("all" == req.query.themes) {
     Theme.get(function(err, docs) {
       if (err) {
@@ -93,7 +143,7 @@ router.get('/user_vote', function(req, res, next) {
         return;
       }
       
-      console.log(docs);
+      // console.log(docs);
       res.send(docs);
     });    
   }
@@ -209,10 +259,21 @@ router.post('/user_vote', function(req, res, next) {
       });
     }
     else if ("vote" == req.body.method) {
+      var user = req.session.user;
+
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>');
+      console.log(user);
+console.log('>>>>>>>>>>>>>>>>>>>>>>>>>');
       // console.log(req.body);  
+      // var vote = {
+      //   id: req.body.theme + req.ip,
+      //   userId: (req.body.userId ? req.body.userId : req.ip),
+      //   themeId: req.body.theme,  
+      //   votes: [{no: req.body.no, date: new Date(), comments: req.body.comments}],
+      // };
       var vote = {
-        id: req.body.theme + req.ip,
-        userId: (req.body.userId ? req.body.userId : req.ip),
+        id: user.sessionId,
+        userId: user.userId,
         themeId: req.body.theme,  
         votes: [{no: req.body.no, date: new Date(), comments: req.body.comments}],
       };

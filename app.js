@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var childProcess = require('child_process');
+var isIPv6 = require('net').isIPv6;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -23,10 +26,66 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(session({
+  genid: function(req) {
+    function genuuid() {
+      var id = setTimeout('0');  
+      clearTimeout(id);  
+      return id + ""; //必须是字符串，调了很久  
+    }
+
+    return genuuid();
+  },
+  secret: '12345',
+  name: 'user_info',  //cookie name 
+  cookie: {secure: false, maxAge: 60000, httpOnly:false},
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(function (req, res, next) {
+  var sess = req.session;
+  var userObj = {
+    id: req.ip,
+    name : req.ip,
+    ip : req.ip,
+    email : "",
+    password : ""
+  };
+
+  // sess.user = userObj;
+
+  var ip = req.ip;
+
+  if (isIPv6(req.ip)) {
+    ip = req.ip.slice(7);
+  }
+
+  childProcess.exec('nmblookup -A ' + ip, 
+    function (error, stdout, stderr) {
+      if (error) {
+        console.log("cannot get " + ip + "'s host name"); 
+      }
+      else {
+        // console.log(stdout);
+
+        userObj.id = stdout.split('\n')[1].split(' ')[0].trim();
+        userObj.name = userObj.id;
+      }
+
+      if (!sess.user) {
+        sess.user = userObj;
+        console.log(sess.user);
+      }
+  });
+
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
-devFinder.initDevFind();
+// devFinder.initDevFind();
 
 app.use('/users', users);
 
