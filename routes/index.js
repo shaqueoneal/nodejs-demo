@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var models = require('../models') 
+var childProcess = require('child_process');
+var isIPv6 = require('net').isIPv6;
 
 var User = models.User;
 var Theme = models.Theme;
@@ -83,6 +85,7 @@ Theme.set(themeObj, function (err, doc) {
 });
 
 router.get('/user_vote', function(req, res, next) {   
+  console.log(req);
   if ("all" == req.query.themes) {
     Theme.get(function(err, docs) {
       if (err) {
@@ -102,20 +105,34 @@ router.get('/user_vote', function(req, res, next) {
     email : "",
     password : ""
   };
-  User.add(userObj, function (err, doc) {
-    if (err) {
-      return;
-    }
+  User.add(userObj, function (err, doc) {});
+
+  var ip = req.ip;
+
+  if (isIPv6(req.ip)) {
+    ip = req.ip.slice(7);
+  }
+
+  childProcess.exec('nmblookup -A ' + ip, 
+    function (error, stdout, stderr) {
+      if (error) {
+        console.log("cannot get " + ip + "'s host name"); 
+      }
+      else {
+        console.log(stdout);
+
+        User.del(userObj, function (err, doc) {
+          if (err) {
+            return;
+          }
+
+          userObj.id = stdout.split('\n')[1].split(' ')[0].trim();
+          userObj.name = userObj.id;
+
+          User.add(userObj, function (err, doc) {});
+        });
+      }     
   });
-
-
-  // var theme = new Theme(themeObj);  //this is theme doc
-
-  // theme.countVotes(function(voteRecords) {
-  //   console.log(voteRecords);
-  // });
-	
-  // next();
 });
 
 // router.get('/', function(req, res, next) { 
@@ -145,7 +162,7 @@ router.post('/user_vote', function(req, res, next) {
             return;
           }
           
-          console.log(docs);
+          // console.log(docs);
           res.send(docs);
         });    
       }
@@ -171,11 +188,11 @@ router.post('/user_vote', function(req, res, next) {
           return;
         }
 
-        console.log(docs[0]);
+        // console.log(docs[0]);
         var theme = docs[0];
 
         theme.countVotes(function(voteRecords) {
-          console.log(voteRecords);
+          // console.log(voteRecords);
           res.send(voteRecords);
         });
       });
@@ -187,12 +204,12 @@ router.post('/user_vote', function(req, res, next) {
           return;
         }
         
-        console.log(docs);
+        // console.log(docs);
         res.send(docs);
       });
     }
     else if ("vote" == req.body.method) {
-      console.log(req.body);  
+      // console.log(req.body);  
       var vote = {
         id: req.body.theme + req.ip,
         userId: (req.body.userId ? req.body.userId : req.ip),
@@ -218,7 +235,7 @@ router.post('/user_vote', function(req, res, next) {
 });
 
 router.post('/user_message', function(req, res, next) {
-  console.log(req.body);
+  // console.log(req.body);
   var userMsg = {};
   userMsg.id =  Date.now().toString();
   userMsg.name = req.body.name;
