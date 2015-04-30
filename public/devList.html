@@ -69,7 +69,12 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 			    $('#tbl_devlist').dataTable( {
-			        "ajax": '../ajax/data/arrays.txt'
+			        "ajax": 'ajax/devList.json',
+			        "columns": [
+			            { "data": "ip" },
+			            { "data": "type" },
+			            { "data": "status" },
+			        ]
 			    } );
 			} );
 		</script>

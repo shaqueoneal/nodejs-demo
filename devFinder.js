@@ -1,7 +1,7 @@
 
 var request = require('request');
 var childProcess = require('child_process');
-
+var fs = require('fs');
 
 /* find devices in net */
 var netAllDevs = [
@@ -29,14 +29,15 @@ var netAllDevs = [
 
 var g_netIndex = 0;
 
+var g_uisUrl = "http://10.99.73.184:07042/";
+
 function getDevType(ip) {
 	var options = {
 		headers: {"Connection": "close"},
-	    // url: 'http://127.0.0.1:3005/Config',
-	    url: 'http://' + ip + '/uism',
+	    url: g_uisUrl + "uism/",
 	    method: 'POST',
 	    json:true,
-	    body: {data:{channel : "aaa",appkey : "bbb"},sign : "ccc",token : "ddd"}
+	    body: {"module":"global","method":"get_devtype","ipaddr":"192.168.5.102","session_key":"j8bvcuv8hitl4n90ym9rygfvb4zesslv"},
 	};
 
 	function callback(error, response, data) {
@@ -126,10 +127,9 @@ function getDevInNet(netIp) {
 }
 
 
-var g_devList = [];
-
+// save dev list to file.json
 function saveDevList() {
-	g_devList = [];
+	var devList = [];
 
 	for (var i = 0; i < netAllDevs.length; i++) {
 		for (var j = 0; j < 254; j++) {
@@ -140,13 +140,49 @@ function saveDevList() {
 				status: netAllDevs[i].netDevs[j],
 			}
 
-			g_devList.push(dev);		
+			if (1 == dev.type) {
+				devList.push(dev);	
+			}	
 		}
 	}
+
+	var dataTableList = {data: devList};
+
+    fs.writeFile('public/ajax/devList.json', JSON.stringify(dataTableList), function(err){
+        if(err) {
+        	console.log(err);
+        }
+
+        console.log('write devList finished');
+    });
+
 }
+
+
+
+function getUisSession() {
+	var options = {
+		headers: {"Connection": "keep-alive"},
+	    url: g_uisUrl,
+	    method: 'POST',
+	    json:true,
+	    body: {"module":"userm","method":"login","username":"sysadmin","password":"uis2014"}
+	};
+
+	function callback(error, response, data) {
+	    if (!error && response.statusCode == 200) {
+	    	console.log(data);
+	    }
+	}
+
+	request(options, callback);
+}
+
 
 //netIp is in format of "192.168.1.0"
 function initDevFind() {
+	setTimeout(getUisSession(), 2000);
+
 	setInterval(function(){
 		if (isNetPolled(netAllDevs[g_netIndex].netName)) {
 			if (netAllDevs[g_netIndex + 1]) {
@@ -154,8 +190,7 @@ function initDevFind() {
 			}
 			else {
 				g_netIndex = 0;
-				// a round over, save data
-				saveDevList();
+				// a round over, save data				
 			}
 		}
 		else {			
@@ -165,6 +200,7 @@ function initDevFind() {
 	}, 5000);	//5 seconds check if one net is polled
 
 	setInterval(function(){
+		saveDevList();
 		for (var i = 0; i < netAllDevs.length; i++) {
 			netAllDevs[i].netDevs = [];
 		}
