@@ -38,7 +38,7 @@ app.use(session({
   },
   secret: '12345',
   name: 'user_info',  //cookie name 
-  cookie: {secure: false, maxAge: 60000, httpOnly:false},
+  cookie: {secure: false, httpOnly:false},
   resave: false,
   saveUninitialized: true
 }));
@@ -76,9 +76,14 @@ app.use(function (req, res, next) {
       if (!sess.user) {
         sess.user = userObj;
         console.log(sess.user);
-        sess.save();    // store session
+        sess.save(function(err) {
+          // session saved
+          console.log(sess);
+
+
+        });
       }
-  });
+    });
 
   next();
 });

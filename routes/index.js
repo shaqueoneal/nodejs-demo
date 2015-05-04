@@ -263,7 +263,7 @@ router.post('/user_vote', function(req, res, next) {
 
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>>');
       console.log(user);
-console.log('>>>>>>>>>>>>>>>>>>>>>>>>>');
+
       // console.log(req.body);  
       // var vote = {
       //   id: req.body.theme + req.ip,
@@ -272,8 +272,8 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>');
       //   votes: [{no: req.body.no, date: new Date(), comments: req.body.comments}],
       // };
       var vote = {
-        id: user.sessionId,
-        userId: user.userId,
+        id: user.id + req.body.theme,
+        userId: user.id,
         themeId: req.body.theme,  
         votes: [{no: req.body.no, date: new Date(), comments: req.body.comments}],
       };
