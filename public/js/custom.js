@@ -451,13 +451,15 @@ function initExhibition(theme) {
 			});
 
 			sendJsonData('/user_vote', 'POST', jsonData, function (data) {
-	          	console.log(data);
+	          	// console.log(data);
 
 	        	if (confirm("您投了 " + candidate.id + "# 作品" + 
 	        		(candidate.name ? " :《" + candidate.name + "》":"") + 
 	        		"一票，感谢您的参与，现在您可以点击确定查看投票结果！")) {
 
 					showResult(g_theme.id);
+					showResultDetail(g_theme.id);
+
 					$('a[href="#outcome"]').click();
 	        	}	        	
 
@@ -521,8 +523,6 @@ function initExhibition(theme) {
       data.datasets[0].strokeColor     = "rgba(220,220,220,0.8)";  
     });    
 
-    console.log(data);
-
     ctx = $("#" + id).get(0).getContext("2d");
 
     if (g_bar) {
@@ -569,7 +569,7 @@ function initExhibition(theme) {
 		if (legendId) {
 			option.legendTemplate = "<ul class=\"<%=name.toLowerCase()%>-legend\"> \
 				<% for (var i=0; i<segments.length; i++){%> \<li><span style=\"background-color:<%=segments[i].fillColor%>\"></span> \
-				<% console.log(segments[i]); if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>";
+				<% if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>";
 
 			$("#" + legendId).append(pie.generateLegend());
 		}
@@ -577,6 +577,7 @@ function initExhibition(theme) {
 		return pie;
 	}
 
+	// display votes in marquee
 	function showResultDetail(themeId) {
 		var jsonData = {
 			"method":   "getResultDetail",
@@ -588,6 +589,8 @@ function initExhibition(theme) {
 
 		sendJsonData('/user_vote', 'POST', jsonData, function (votes) {
 			console.log(votes);
+
+			$('#marquee ul').empty();
 
 			$.each(votes, function(index, data) {
 				if (data) {
@@ -601,10 +604,20 @@ function initExhibition(theme) {
 						detailRecord.voteDate = d.date;
 						voteDetailRecords.push(detailRecord);
 					});
-					
+
+					var str = detailRecord.userId + " 投了《" + detailRecord.workName + "》一票";	
+
+					$('#marquee ul').append('<li>' + str + '</li>');			
 				}
 			});
-		});
+
+			$('#marquee').kxbdSuperMarquee({			
+				isMarquee:true,
+				isEqual:false,
+				scrollDelay:20,
+				//btnGo:{up:'#goU',down:'#goD'},
+				direction:'up'});
+			});
 	}
 
 var g_bar;
@@ -630,7 +643,6 @@ var g_pie;
 				var vote = {};
 				vote.label = g_theme.candidates[i].name;
 				vote.value = d;
-
 				voteRecords.push(vote);
 			});
 
@@ -687,7 +699,8 @@ var g_theme = {}; 	//contains current theme data
 
 		      		// already voted
 					if ($.cookie('vote')) {
-			      		showResult(themeId);	      		
+			      		showResult(themeId);
+			      		showResultDetail(themeId);	
 		      		}
 
 		      	});

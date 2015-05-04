@@ -2,6 +2,7 @@
 var request = require('request');
 var childProcess = require('child_process');
 var fs = require('fs');
+var path = require('path');
 
 /* find devices in net */
 var netAllDevs = [
@@ -126,7 +127,6 @@ function getDevInNet(netIp) {
 	return netDevs;
 }
 
-
 // save dev list to file.json
 function saveDevList() {
 	var devList = [];
@@ -140,20 +140,20 @@ function saveDevList() {
 				status: netAllDevs[i].netDevs[j],
 			}
 
-			if (1 == dev.type) {
+			if (1 === dev.status) {
 				devList.push(dev);	
-			}	
+			}				
 		}
 	}
 
-	var dataTableList = {data: devList};
+	var json = {data : devList};
 
-    fs.writeFile('public/ajax/devList.json', JSON.stringify(dataTableList), function(err){
-        if(err) {
+	fs.writeFile(path.join(__dirname, 'public/ajax/devList.json'), JSON.stringify(json), function (err) {
+        if (err) {
         	console.log(err);
         }
 
-        console.log('write devList finished');
+        console.log("Export dev list success!");
     });
 
 }
@@ -190,7 +190,8 @@ function initDevFind() {
 			}
 			else {
 				g_netIndex = 0;
-				// a round over, save data				
+
+				// a round over, save data
 			}
 		}
 		else {			
@@ -201,12 +202,13 @@ function initDevFind() {
 
 	setInterval(function(){
 		saveDevList();
+
 		for (var i = 0; i < netAllDevs.length; i++) {
 			netAllDevs[i].netDevs = [];
 		}
 		
 		g_netIndex = 0;	
-	}, 1000 * 60 * 2); //10 minutes refresh
+	}, 1000 * 60 * 1); //10 minutes refresh
 }
 
 exports.initDevFind = initDevFind;
