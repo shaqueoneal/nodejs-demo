@@ -149,35 +149,35 @@ router.get('/user_vote', function(req, res, next) {
           userObj.name = userObj.id;
 
           User.add(userObj, function (err, doc) {});
-        });
-      } 
 
-      if (!sess.user) {
-        sess.user = userObj;
-        sess.save(function(err) {
-          // session saved
-          console.log(sess);
-        });
+          if (!sess.user) {
+            sess.user = userObj;
+            sess.save(function(err) {
+              // session saved
+              console.log(sess);
+            });
 
-        BrowseCount.get({userId: sess.user.id}, function(err, doc) {
-            if (err) {
-              console.log('err');
-              return;
-            }
+            BrowseCount.get({userId: sess.user.id}, function(err, doc) {
+                if (err) {
+                  console.log('err');
+                  return;
+                }
 
-            var browse = {
-              userId: sess.user.id,
-              lastAccess: Date.now(),              
-            };
+                var browse = {
+                  userId: sess.user.id,
+                  lastAccess: Date.now(),              
+                };
 
-            if (!doc || doc.length <= 0) {
-              browse.count = 1,
-            }
-            else {
-              browse.count = doc.browse.count + 1;
-            }
+                if (!doc || doc.length <= 0) {
+                  browse.count = 1;
+                }
+                else {
+                  browse.count = doc.count + 1;
+                }
 
-            BrowseCount.set(browse, function(err, doc) {}); 
+                BrowseCount.set(browse, function(err, doc) {}); 
+            });
+          }
         });
       }
     });

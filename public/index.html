@@ -294,8 +294,14 @@
         <script src="js/kxbdSuperMarquee.js"></script>
         <script src="js/util.js"></script>
         <script src="js/custom.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
         <script type="text/javascript">
-
+		  // var socket = io.connect();		it seems listening port should be the same as app port, then it works
+		  var socket = io.connect();
+		  socket.on('news', function (data) {
+		    console.log(data);
+		    socket.emit('my other event', { my: 'data' });
+		  });
         </script>
 
     </body>

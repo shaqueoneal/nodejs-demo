@@ -6,6 +6,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var childProcess = require('child_process');
+var http = require('http');
 var isIPv6 = require('net').isIPv6;
 
 var routes = require('./routes/index');
@@ -14,6 +15,24 @@ var users = require('./routes/users');
 var devFinder = require('./devFinder');
 
 var app = express();
+
+// var server = require('http').Server(app);
+var server = http.createServer(app);;
+var io = require('socket.io')(server);
+
+server.listen(80);
+
+//websocket
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
