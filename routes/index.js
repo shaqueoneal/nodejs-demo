@@ -80,61 +80,30 @@ var themeObj = {
   candidates: g_candidates, 
 };
 
-Theme.set(themeObj, function (err, doc) {
+Theme.set(themeObj, function(err, doc) {
   if (err) {
     console.log(err);
     return;
   }
 });
 
-// router.use('/', function(req, res, next) {
-//   var user = req.session.user;
-//   console.log('ggggggg');
-//   var userObj = {
-//     id: req.ip,
-//     name : req.ip,
-//     ip : req.ip,
-//     email : "",
-//     password : ""
-//   };
+// only in memory and init from BrowseCount when app start
+var g_totalAccessCount = 0; 
 
-//   user = userObj;
+BrowseCount.get(function(err, docs) {
+  if (err) {
+    console.log('err');
+    return;
+  }
 
-//   User.add(userObj, function (err, doc) {});
-
-//   var ip = req.ip;
-
-//   if (isIPv6(req.ip)) {
-//     ip = req.ip.slice(7);
-//   }
-
-//   childProcess.exec('nmblookup -A ' + ip, 
-//     function (error, stdout, stderr) {
-//       if (error) {
-//         console.log("cannot get " + ip + "'s host name"); 
-//       }
-//       else {
-//         console.log(stdout);
-
-//         User.del(userObj, function (err, doc) {
-//           if (err) {
-//             return;
-//           }
-
-//           userObj.id = stdout.split('\n')[1].split(' ')[0].trim();
-//           userObj.name = userObj.id;
-
-//           user = userObj;
-//           User.add(userObj, function (err, doc) {});
-//         });
-//       }     
-//   });
-
-//   next();
-// });
-
+  for (var i = 0; i < docs.length; i++) {
+    g_totalAccessCount += docs[i].count;
+  }
+});   
 
 router.get('/user_vote', function(req, res, next) {
+  var sess = req.session;
+
   // console.log(req);
   if ("all" == req.query.themes) {
     Theme.get(function(err, docs) {
@@ -181,9 +150,38 @@ router.get('/user_vote', function(req, res, next) {
 
           User.add(userObj, function (err, doc) {});
         });
-      }     
+      } 
+
+      if (!sess.user) {
+        sess.user = userObj;
+        sess.save(function(err) {
+          // session saved
+          console.log(sess);
+        });
+
+        BrowseCount.get({userId: sess.user.id}, function(err, doc) {
+            if (err) {
+              console.log('err');
+              return;
+            }
+
+            var browse = {
+              userId: sess.user.id,
+              lastAccess: Date.now(),              
+            };
+
+            if (!doc || doc.length <= 0) {
+              browse.count = 1,
+            }
+            else {
+              browse.count = doc.browse.count + 1;
+            }
+
+            BrowseCount.set(browse, function(err, doc) {}); 
+        });
+      }
+    });
   });
-});
 
 // router.get('/', function(req, res, next) { 
 //   res.sendFile('.public/index.html'); 

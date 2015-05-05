@@ -43,51 +43,6 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use(function (req, res, next) {
-  var sess = req.session;
-  var userObj = {
-    id: req.ip,
-    name : req.ip,
-    ip : req.ip,
-    email : "",
-    password : ""
-  };
-
-  // sess.user = userObj;
-
-  var ip = req.ip;
-
-  if (isIPv6(req.ip)) {
-    ip = req.ip.slice(7);
-  }
-
-  childProcess.exec('nmblookup -A ' + ip, 
-    function (error, stdout, stderr) {
-      if (error) {
-        console.log("cannot get " + ip + "'s host name"); 
-      }
-      else {
-        // console.log(stdout);
-
-        userObj.id = stdout.split('\n')[1].split(' ')[0].trim();
-        userObj.name = userObj.id;
-      }
-
-      if (!sess.user) {
-        sess.user = userObj;
-        console.log(sess.user);
-        sess.save(function(err) {
-          // session saved
-          console.log(sess);
-
-
-        });
-      }
-    });
-
-  next();
-});
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 

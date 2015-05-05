@@ -44,7 +44,7 @@ var _Theme = new Schema({
 var _BrowseCount = new Schema({
 	userId: String,
 	count: { type: Number, default: 0 },
-	accessDate: Date,
+	lastAccess: Date,
 });
 
 // candidate is a work in the theme
