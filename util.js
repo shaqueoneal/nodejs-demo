@@ -2,7 +2,7 @@ var childProcess = require('child_process');
 var net = require('net');
 
 function getHostNameByIp(ip, cb) {
-  var hostname = "";
+  var hostname = ip;
 
   if (!net.isIP(ip)) {
     console.log("Error: invalid ip");
@@ -13,7 +13,7 @@ function getHostNameByIp(ip, cb) {
       ip = ip.slice(7); // to ipv4
     }
 
-    childProcess.exec('nmblookup -A ' + ip, 
+    childProcess.exec('nmblookup -A ' + ip, {timeout: 1000},
       function (error, stdout, stderr) {
         if (error) {
           console.log("cannot get " + ip + "'s host name"); 
@@ -32,7 +32,7 @@ function getHostNameByIp(ip, cb) {
             }
           }                    
         }
-
+      
         cb(hostname);
       });
   }  
