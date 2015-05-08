@@ -19,8 +19,18 @@ function getHostNameByIp(ip, cb) {
           console.log("cannot get " + ip + "'s host name"); 
         }
         else {
-          hostname = stdout.split('\n')[1].split(' ')[0].trim();
-          console.log("get " + ip + "'s host name:" + hostname);           
+          var lines = stdout.split('\n');
+          for (var i = 0; i < lines.length; i++) {
+            if (lines[i].indexOf('<GROUP>') >= 0) {
+              continue;
+            }
+
+            if (lines[i].indexOf('<00>') >= 0) {
+              hostname = lines[i].split(' ')[0].trim();
+              console.log("get " + ip + "'s host name:" + hostname); 
+              break;
+            }
+          }                    
         }
 
         cb(hostname);
