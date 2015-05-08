@@ -1,18 +1,20 @@
-var express         = require('express');
-var path            = require('path');
-var favicon         = require('serve-favicon');
-var logger          = require('morgan');
-// var cookieParser = require('cookie-parser');
-var bodyParser      = require('body-parser');
-var session         = require('express-session');
-var http            = require('http');
-var routes          = require('./routes/index');
-var users           = require('./routes/users');
+var express      = require('express');
+var path         = require('path');
+var favicon      = require('serve-favicon');
+var logger       = require('morgan');
+var cookie       = require('cookie');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+var session      = require('express-session');
+var http         = require('http');
+var routes       = require('./routes/index');
+var users        = require('./routes/users');
 
+/* self module */
 var models          = require('./models');
-var?User            = models.User;
-var?BrowseCount     = models.BrowseCount;
-var?getHostNameByIp = require('./util').getHostNameByIp;
+varÂ User            = models.User;
+varÂ BrowseCount     = models.BrowseCount;
+varÂ getHostNameByIp = require('./util').getHostNameByIp;
 var devFinder       = require('./devFinder');
 
 var app    = express();
@@ -21,31 +23,38 @@ var io     = require('socket.io')(server);
 
 server.listen(3000);
 
+var sessionStore = new session.MemoryStore();
+
+var COOKIE_SECRET = '12345';
+var COOKIE_NAME = 'user_info';
+
 // session.store.length;
 app.use(session({
-  genid: function(req) {
-    function genuuid() {
-      var id = setTimeout('0');  
-      clearTimeout(id);  
-      return id + ""; //±ØÐëÊÇ×Ö·û´®£¬µ÷ÁËºÜ¾Ã  
-    }
+  // genid: function(req) {
+  //   function genuuid() {
+  //     var id = setTimeout('0');  
+  //     clearTimeout(id);  
+  //     return id + ""; //å¿…é¡»æ˜¯å­—ç¬¦ä¸²ï¼Œè°ƒäº†å¾ˆä¹…  
+  //   }
 
-    return genuuid();
+  //   return genuuid();
+  // },
+  secret: COOKIE_SECRET,
+  store: sessionStore,
+  name: COOKIE_NAME,
+  cookie: {
+    secure:   false, 
+    httpOnly: false,
+    maxAge: null
   },
-  secret: '12345',
-  name: 'user_info',  //cookie name 
-  cookie: {secure: false, httpOnly:false},
-  resave: false,
-  saveUninitialized: true
+  // resave: false,
+  resave: true,
+  saveUninitialized: true,
 }));
-
-// index file
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
 
 // only in memory and init from BrowseCount when app start
 var g_totalAccessCount = 0; 
+var g_onlineCount = 0;
 
 BrowseCount.get(function(err, docs) {
   if (err) {
@@ -59,15 +68,13 @@ BrowseCount.get(function(err, docs) {
 });
 
 io.on('connection', function (socket) {
-  console.log(socket);
-  // console.log(socket.conn.request);
   var clientIp = socket.client.conn.remoteAddress;
   // console.log(clientIp);
 
   g_totalAccessCount++;
+  g_onlineCount++;
 
   getHostNameByIp(clientIp, function(hostname) {
-    socket.emit('news', {count: g_totalAccessCount});
     socket.on('my other event', function (data) {
       console.log(data);
     });
@@ -80,49 +87,109 @@ io.on('connection', function (socket) {
       password: ""
     };
 
+    /* add user if new commer */
     User.add(userObj, function (err, doc) {});
 
-    // var sess = session.store.get(socket.handshake.sessionID, function (err, data) {
-    //         if (err || !data) {
-    //             console.log('no session data yet');
-    //         } else {
-    //             socket.emit('views', data);
-    //         }
-    //       });
+    /* save user access info */
+    BrowseCount.get({id: userObj.id}, function(err, docs) {
+      if (err) {
+        console.log(err);
+        return;
+      }
 
-    // if (!sess.user) {
-    //   sess.user = userObj;
-    //   sess.save(function(err) {
-    //           // session saved
-    //           console.log(sess);
-    //         });
+      var browse = {
+        id: userObj.id,
+        count: 1,
+        lastAccess: Date.now(),
+      };
 
-    //   BrowseCount.get({userId: sess.user.id}, function(err, doc) {
-    //     if (err) {
-    //       console.log('err');
-    //       return;
-    //     }
+      if (!docs || docs.length <= 0) {
+        console.log('add browse count');
+        BrowseCount.add(browse, function() {});
+      }
+      else {
+        browse.count = docs[0].count + 1;    /* user access time +1 */
+        browse.lastAccess = Date.now();
 
-    //     var browse = {
-    //       userId: sess.user.id,
-    //       lastAccess: Date.now(),              
-    //     };
+        console.log('set browse count');
 
-    //     if (!doc || doc.length <= 0) {
-    //       browse.count = 1;
-    //     }
-    //     else {
-    //       browse.count = doc.count + 1;
-    //     }
+        BrowseCount.set(browse, function() {});
+      }
+    });
 
-    //     BrowseCount.set(browse, function(err, doc) {}); 
-    //   });
-    // }
+    /* save session */
+    var data = socket.handshake || socket.request;
+    if (! data.headers.cookie) {
+        // return next(new Error('Missing cookie headers'));
+        console.log('Missing cookie headers');
+        return;
+    }
+    console.log(data);
+    // console.log('cookie header ( %s )', JSON.stringify(data.headers.cookie));
+    var cookies = cookie.parse(data.headers.cookie);
+    console.log('cookies parsed ( %s )', JSON.stringify(cookies));
+    if (!cookies[COOKIE_NAME]) {
+        var sid = session.genid();
 
+        sessionStore.set(sid, userObj, function(err, session) {
+          console.log('add session of user: ' + userObj.id);
+          data.sid = sid;
+          data.session = session;
+        });
+    }
+    else {
+      var sid = cookieParser.signedCookie(cookies[COOKIE_NAME], COOKIE_SECRET);
+      if (!sid) {
+        console.log('Cookie signature is not valid');
+        return;
+      }
+
+      console.log('session ID ( %s )', sid);
+      data.sid = sid;
+      sessionStore.get(sid, function(err, session) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+
+        if (!session) {
+          console.log('session not found');
+
+          sessionStore.set(sid, userObj, function(err, session) {
+            console.log('add session of user: ' + userObj.id);
+            data.sid = sid;
+            data.session = session;
+          });
+
+          return;
+        }
+
+      });
+    }
+
+    socket.emit('hostname', hostname);      //use socket.emit to peer
+
+    io.emit('browse', {
+      total: g_totalAccessCount,
+      online: g_onlineCount,
+    });  //use io.emit to all
+
+    socket.on('disconnect', function(){ 
+      g_onlineCount--;
+
+      io.emit('browse', {
+        total: g_totalAccessCount,
+        online: g_onlineCount,
+      });
+    });
   });
+});
 
- });
 
+// index file
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
