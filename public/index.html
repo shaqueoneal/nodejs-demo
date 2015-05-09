@@ -296,10 +296,10 @@
         <script src="js/custom.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script type="text/javascript">
-		  var socket = io.connect('http://10.99.73.184:3000');
-		  socket.on('total', function (data) {
+		  var socket = io.connect('http://192.168.1.111:3000');
+		  socket.on('hostname', function (data) {
 		    console.log(data);
-		    socket.emit('my other event', { my: 'data' });
+		    // socket.emit('my other event', { my: 'data' });
 		  });
 		  socket.on('browse', function (data) {
 		    console.log(data);

@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var models = require('../models') 
 var childProcess = require('child_process');
+var session = require('express-session');
 var isIPv6 = require('net').isIPv6;
 
 // var app =  require('../app');
-var session = require('express-session');
+
+var models = require('../models');
+var getHostNameByIp = require('../util').getHostNameByIp;
 
 var User = models.User;
 var Theme = models.Theme;
@@ -116,72 +118,25 @@ router.get('/user_vote', function(req, res, next) {
       res.send(docs);
     });    
   }
-  
-  var userObj = {
-    id: req.ip,
-    name : req.ip,
-    ip : req.ip,
-    email : "",
-    password : ""
-  };
-  User.add(userObj, function (err, doc) {});
 
-  var ip = req.ip;
+  getHostNameByIp(req.ip, function(hostname) { 
+    if (!sess.user) {
+      var userObj = {
+        id: hostname,
+        name : hostname,
+        ip : req.ip,
+        email : "",
+        password : ""
+      };
 
-  if (isIPv6(req.ip)) {
-    ip = req.ip.slice(7);
-  }
-
-  childProcess.exec('nmblookup -A ' + ip, 
-    function (error, stdout, stderr) {
-      if (error) {
-        console.log("cannot get " + ip + "'s host name"); 
-      }
-      else {
-        console.log(stdout);
-
-        User.del(userObj, function (err, doc) {
-          if (err) {
-            return;
-          }
-
-          userObj.id = stdout.split('\n')[1].split(' ')[0].trim();
-          userObj.name = userObj.id;
-
-          User.add(userObj, function (err, doc) {});
-
-          if (!sess.user) {
-            sess.user = userObj;
-            sess.save(function(err) {
-              // session saved
-              console.log(sess);
-            });
-
-            BrowseCount.get({userId: sess.user.id}, function(err, doc) {
-                if (err) {
-                  console.log('err');
-                  return;
-                }
-
-                var browse = {
-                  userId: sess.user.id,
-                  lastAccess: Date.now(),              
-                };
-
-                if (!doc || doc.length <= 0) {
-                  browse.count = 1;
-                }
-                else {
-                  browse.count = doc.count + 1;
-                }
-
-                BrowseCount.set(browse, function(err, doc) {}); 
-            });
-          }
-        });
-      }
-    });
+      sess.user = userObj;
+      sess.save(function(err) {
+        // session saved
+        console.log(sess);
+      });
+    }
   });
+});
 
 // router.get('/', function(req, res, next) { 
 //   res.sendFile('.public/index.html'); 

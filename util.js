@@ -34,7 +34,8 @@ function getHostNameByIp(ip, cb) {
         }
       
         cb(hostname);
-      });
+      }
+    );
   }  
 }
 
