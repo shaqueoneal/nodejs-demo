@@ -2079,3 +2079,14 @@ iframe.full {
   line-height:20px; 
   width: 100%;
 }
+
+#browse_info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background-color: #e04d47;
+  color: white;
+  width: 100%;
+}

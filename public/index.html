@@ -64,6 +64,14 @@
         <!-- Header -->
         <header id="header" class="site-header" role="banner">
 	    <div class="container">
+
+	    <div id="browse_info">
+	    	<div class="col-md-6"></div>
+	    	<div class="col-md-2">总访问量：<span id="spn_total_access"></span></div>
+	    	<div class="col-md-2">在线人数：<span id="spn_online"></span></div>
+	    	<div class="col-md-2">您好：<span id="spn_username"></span></div>
+	    </div>
+
 		<div class="row">
 		    
 		    <div class="col-md-4">
@@ -300,9 +308,12 @@
 		  socket.on('hostname', function (data) {
 		    console.log(data);
 		    // socket.emit('my other event', { my: 'data' });
+
+		    $('#spn_username').html(data);
 		  });
 		  socket.on('browse', function (data) {
-		    console.log(data);
+		    $('#spn_online').html(data.online);
+		    $('#spn_total_access').html(data.total);
 		  });
         </script>
 

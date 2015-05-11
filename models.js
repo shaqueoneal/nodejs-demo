@@ -42,7 +42,7 @@ var _Theme = new Schema({
 });
 
 var _BrowseCount = new Schema({
-	userId: String,
+	id: String,		// user id
 	count: { type: Number, default: 0 },
 	lastAccess: Date,
 });

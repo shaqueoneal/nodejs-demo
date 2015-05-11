@@ -89,19 +89,6 @@ Theme.set(themeObj, function(err, doc) {
   }
 });
 
-// only in memory and init from BrowseCount when app start
-var g_totalAccessCount = 0; 
-
-BrowseCount.get(function(err, docs) {
-  if (err) {
-    console.log('err');
-    return;
-  }
-
-  for (var i = 0; i < docs.length; i++) {
-    g_totalAccessCount += docs[i].count;
-  }
-});   
 
 router.get('/user_vote', function(req, res, next) {
   var sess = req.session;

@@ -47,8 +47,7 @@ app.use(session({
     httpOnly: false,
     maxAge: null
   },
-  // resave: false,
-  resave: true,
+  resave: false,
   saveUninitialized: true,
 }));
 
