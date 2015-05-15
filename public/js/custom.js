@@ -249,9 +249,9 @@ $('.animated-item').each(function() {
 /*-----------PAGE PRELOADER-------------*/
 
 $(window).load(function() {
-	$("#page-preloader").fadeOut(300, function(){
-		$(this).remove();	
-	});
+	// $("#page-preloader").fadeOut(300, function(){
+	// 	$(this).remove();	
+	// });
 	
 });
 
@@ -683,7 +683,7 @@ var g_theme = {}; 	//contains current theme data
 	      			'			<img src="' + d.imgUrl + '" alt="slide-' +  d.id + '">  '+
 	      			'		    </li>');	
 
-	      		$('#introduction .slides').append(slide);
+	      		$('#introduction .slides').append(slide);	      		
 
 		      	$('.slide-button').click(function(){
 		      		g_theme = d;
@@ -710,18 +710,21 @@ var g_theme = {}; 	//contains current theme data
 	      		$(".slide-navigation").show();
 	      	}
 
+			initSuperFish();
+			initFlexSlider();
+			initLocalScroll();
+			initParallax();
+			niceScrollInit();
+			toolTipInit();
+			isotopeInit();
+			initMagnificPopup();
+			triggerMobileMenu();
 
-
-		initSuperFish();
-		initFlexSlider();
-		initLocalScroll();
-		initParallax();
-		niceScrollInit();
-		toolTipInit();
-		isotopeInit();
-		initMagnificPopup();
-		triggerMobileMenu();
-
+			$('#contact').show(function() {
+				$("#page-preloader").fadeOut(300, function(){				
+					$(this).remove();	
+				});
+			});
 
 	    });
 
