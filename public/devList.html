@@ -42,7 +42,7 @@
         	}
         </style>
     </head>
-    <body background="images/dataCenter.jpg">
+    <body background="images/dataCenter.jpg" style="background-size:cover">
 		<div class="container"> 		
 			<div class="row">
 			    <div class="col-md-12">
@@ -76,7 +76,9 @@
 			    </div>
 			</div>
 		</div>
+		<script src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript">
+			var socket = io.connect('http://UIS-SERVER2:3000');
 			$(document).ready(function() {
 			    $('#tbl_devlist').dataTable( {
 			        "ajax": "ajax/devList.json",
