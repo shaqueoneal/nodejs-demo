@@ -9,13 +9,14 @@ var session      = require('express-session');
 var http         = require('http');
 var routes       = require('./routes/index');
 var users        = require('./routes/users');
+var childProcess = require('child_process');
 
 /* self module */
 var models          = require('./models');
 var User            = models.User;
 var BrowseCount     = models.BrowseCount;
 var getHostNameByIp = require('./util').getHostNameByIp;
-var devFinder       = require('./devFinder');
+// var devFinder       = require('./devFinder');
 
 var app    = express();
 var server = http.createServer(app);
@@ -218,7 +219,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
-// devFinder.initDevFind();
+childProcess.fork('./devFinder');
 
 app.use('/users', users);
 

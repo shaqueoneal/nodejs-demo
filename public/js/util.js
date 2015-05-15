@@ -52,7 +52,7 @@ function getHighlightColor(color) {
 }
 
 function sendJsonData(url, type, data, cb) {
-    console.log('sendJsonData' + JSON.stringify(data));
+    // console.log('sendJsonData' + JSON.stringify(data));
 
     $.ajax({
       url:      url,
@@ -62,7 +62,7 @@ function sendJsonData(url, type, data, cb) {
       type:     type,
       timeout:  12000, //12s time out
       success:  function (data) {
-        console.log('receieveJsonData' + JSON.stringify(data));
+        // console.log('receieveJsonData' + JSON.stringify(data));
 
       	if($.isFunction(cb)) {
       		cb(data);

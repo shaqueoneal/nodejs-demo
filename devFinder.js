@@ -67,27 +67,26 @@ function getDevType(ip, cb) {
 	var devType;
 
 	request(url, function (error, response, body) {
-	  if (error) {
-	    return;
-	  }
+		if (error) {
+			cb(devType);
+			return;
+		}
 
-	  if (response.headers) {	// iLO
-	    var serverName = response.headers.server;
-	    devType = parseDevTypeByHttp(serverName);
-	  }
+		if (response.headers) {	// iLO
+			var serverName = response.headers.server;
+			devType = parseDevTypeByHttp(serverName);
+		}
 
-	  // if (!error && response.statusCode == 200) {   
-	  //   devType = getDevTypeByHttp(body);
-	  // }
+		// if (!error && response.statusCode == 200) {   
+		//   devType = parseDevTypeByHttp(body);
+		// }
 
-	  if (!error && response.statusCode == 302) {   // OA
-	    devType = parseDevTypeByHttp(body);
-	  }
+		if (!error && response.statusCode == 302) {   // OA
+			devType = parseDevTypeByHttp(body);
+		}
 
-	  if (devType) {
-	  	cb(devType);
-	  	return;
-	  }
+		cb(devType);
+		return;
 	});
 
 
@@ -113,10 +112,9 @@ function getDevType(ip, cb) {
 	        }
 	    }
 
-	    if (devType) {
-	    	cb(devType);
-	    	return;
-	    }
+
+    	cb(devType);
+    	return;
 	});
 	
 
@@ -124,6 +122,7 @@ function getDevType(ip, cb) {
 	url += ":8080";
 	request(url, function (error, response, body) {
 		if (error) {
+			cb(devType);
 			return;
 		}
 
@@ -135,6 +134,9 @@ function getDevType(ip, cb) {
 				return;
 			}
 		}
+
+		cb(devType);
+    	return;
 	});
 
 }
@@ -157,6 +159,9 @@ function getDevTypeInNet(netIp) {
 				getDevType(netIp.substring(0, netIp.length-1) + i, function (devType) {
 					if (devType) {
 						netDev.netDevTypes[i - 1] = devType;				
+					}
+					else {
+						netDev.netDevTypes[i - 1] = "Unknown";
 					}
 				});
 			}
@@ -313,5 +318,7 @@ function initDevFind() {
 		g_netIndex = 0;	
 	}, 1000 * 60 * 1); //10 minutes refresh
 }
+
+initDevFind();
 
 exports.initDevFind = initDevFind;
