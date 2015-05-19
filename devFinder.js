@@ -66,8 +66,16 @@ function getDevType(ip, cb) {
 	var url = "http://" + ip;
 	var devType;
 
-	request(url, function (error, response, body) {
+	var options = {
+		url: url,
+		rejectUnauthorized: false,
+		timeout: 2000,    
+		followRedirect: false,
+	};
+
+	request(options, function (error, response, body) {
 		if (error) {
+			console.error (error);
 			cb(devType);
 			return;
 		}
@@ -77,11 +85,11 @@ function getDevType(ip, cb) {
 			devType = parseDevTypeByHttp(serverName);
 		}
 
-		// if (!error && response.statusCode == 200) {   
+		// if (response.statusCode == 200) {   
 		//   devType = parseDevTypeByHttp(body);
 		// }
 
-		if (!error && response.statusCode == 302) {   // OA
+		if (response.statusCode == 302) {   // OA
 			devType = parseDevTypeByHttp(body);
 		}
 
@@ -91,13 +99,13 @@ function getDevType(ip, cb) {
 
 
 	// switch
-	var session = snmp.createSession (url, "public", {timeout: 1000});
+	var session = snmp.createSession (ip, "public", {timeout: 1000});
 
 	var oids = ["1.3.6.1.2.1.47.1.1.1.1.13.2"];
 
-	session.get (oids, function (error, varbinds) {
+	session.get(oids, function (error, varbinds) {
 	    if (error) {
-	        // console.error (error);	//{ [RequestTimedOutError: Request timed out] name: 'RequestTimedOutError', message: 'Request timed out' }
+	        console.error (error);	//{ [RequestTimedOutError: Request timed out] name: 'RequestTimedOutError', message: 'Request timed out' }
 	    } 
 	    else {
 	        for (var i = 0; i < varbinds.length; i++) {
@@ -105,23 +113,37 @@ function getDevType(ip, cb) {
 	                // console.error(snmp.varbindError (varbinds[i]));
 	            }
 	            else {
-	                // console.log (varbinds[i].oid + " = " + varbinds[i].value);
+	                console.log (varbinds[i].oid + " = " + varbinds[i].value);
 	                devType = varbinds[i].value;
-
+	                break;
 	            }
 	        }
 	    }
 
-
     	cb(devType);
     	return;
 	});
-	
+
+	session.trap (snmp.TrapType.LinkDown, function (error) {
+		if (error) {
+			console.error (error);		    	
+		}
+
+		cb(devType);
+    	return;
+	});
+
+	var options1 = {
+		url: url + ":8080",
+		rejectUnauthorized: false,
+		timeout: 2000,    
+		followRedirect: false,
+	};
 
 	// CAS
-	url += ":8080";
-	request(url, function (error, response, body) {
+	request(options1, function (error, response, body) {
 		if (error) {
+			console.error (error);
 			cb(devType);
 			return;
 		}
@@ -129,10 +151,6 @@ function getDevType(ip, cb) {
 		if (response.headers) {	
 			var serverName = response.headers.server;
 			devType = parseDevTypeByHttp(serverName);
-			if (devType) {
-				cb(devType);
-				return;
-			}
 		}
 
 		cb(devType);
@@ -157,8 +175,10 @@ function getDevTypeInNet(netIp) {
 		(function(i) {
 			if (1 == netDev.netDevStats[i - 1]) {
 				getDevType(netIp.substring(0, netIp.length-1) + i, function (devType) {
+					console.log("netName:" + netDev.netName);
 					if (devType) {
-						netDev.netDevTypes[i - 1] = devType;				
+						console.log("devType[" + (netIp.substring(0, netIp.length-1) + i) + "] = " + devType);
+						netDev.netDevTypes[i - 1] = devType + "";				
 					}
 					else {
 						netDev.netDevTypes[i - 1] = "Unknown";
@@ -198,7 +218,7 @@ function findDevInNet(netIp) {
 	// x.x.x.1~x.x.x.254
 	for (var i = 1; i < 255; i++) {
 		(function(i){
-			childProcess.exec('ping -w 1 ' +　(netIp.substring(0, netIp.length-1) + i), 
+			childProcess.exec('ping -w 1 ' +　(netIp.substring(0, netIp.length-1) + i), {timeout: 2000},
 			function (error, stdout, stderr) {
 				if (error) {
 					netDev.netDevStats[i - 1] = -1; 
@@ -234,41 +254,23 @@ function isNetPolled(netIp) {
 	return false;
 }
 
-function isNetPolled(netIp) {
-	for (var i = 0; i < g_netAllDevs.length; i++) {
-		if (g_netAllDevs[i].netName == netIp) {
-			for (var j = 0; j < 254; j++) {
-				if (undefined == g_netAllDevs[i].netDevStats[j]) {
-					console.log("net: " + netIp + " not polled");
-					break;
-				}		
-			}
-
-			if (j == 254) {
-				g_netAllDevs[i].bSearching = false;
-				
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
-
 // save dev list to file.json
 function saveDevList() {
 	var devList = [];
 
 	for (var i = 0; i < g_netAllDevs.length; i++) {
+		var netIp = g_netAllDevs[i].netName;
+
 		for (var j = 0; j < 254; j++) {
-			var netIp = g_netAllDevs[i].netName;
 			var dev = {
 				ip : (netIp.substring(0, netIp.length-1) + (j + 1)),
-				type: g_netAllDevs[i].netDevTypes[j],
+				type: g_netAllDevs[i].netDevTypes[j] + "",
 				status: g_netAllDevs[i].netDevStats[j],
 			}
 
-			if (1 === dev.status) {
+console.log(dev);
+
+			if ((1 === dev.status) && ("Unknown" != dev.type)) {
 				devList.push(dev);	
 			}				
 		}
@@ -281,23 +283,37 @@ function saveDevList() {
         	console.log(err);
         }
 
+		for (var i = 0; i < g_netAllDevs.length; i++) {
+			g_netAllDevs[i].netDevStats = [];
+		}
+		
+		g_netIndex = 0;	
+		g_bAllPolled = false;
+
+
         console.log("Export dev list success!");
     });
 
 }
 
+var g_bAllPolled = false;
+
 //netIp is in format of "192.168.1.0"
 function initDevFind() {
 	setInterval(function(){
+		if (g_bAllPolled) {
+			return;
+		}
+
 		if (isNetPolled(g_netAllDevs[g_netIndex].netName)) {
+			getDevTypeInNet(g_netAllDevs[g_netIndex].netName);
+
 			if (g_netAllDevs[g_netIndex + 1]) {
-
-				getDevTypeInNet(g_netAllDevs[g_netIndex].netName);
-
 				g_netIndex += 1;
 			}
 			else {
 				g_netIndex = 0;
+				g_bAllPolled = true;
 
 				// a round over, save data
 			}
@@ -309,13 +325,7 @@ function initDevFind() {
 	}, 5000);	//5 seconds check if one net is polled
 
 	setInterval(function(){
-		saveDevList();
-
-		for (var i = 0; i < g_netAllDevs.length; i++) {
-			g_netAllDevs[i].netDevStats = [];
-		}
-		
-		g_netIndex = 0;	
+		saveDevList();		
 	}, 1000 * 60 * 1); //10 minutes refresh
 }
 
