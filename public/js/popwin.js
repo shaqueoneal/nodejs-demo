@@ -1,6 +1,6 @@
 // 通用的弹层插件
 var popWin = {
-    scrolling: 'no',
+    scrolling: 'auto',
     //是否显示滚动条 no,yes,auto
 
 int: function() {

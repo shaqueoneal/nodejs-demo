@@ -2033,6 +2033,7 @@ iframe.full {
   height:900px;
   -webkit-transform:scale(0.2);
   -webkit-transform-origin:left top;
+  background-color: lightgrey;
 }
 
 .doughnut-legend {

@@ -358,6 +358,10 @@ function initPage(candidates, pageNum, numPerPage) {
 			var iframe = $('<iframe class="full" scrolling="auto"></iframe>');
 			// console.log(colum.get(0).outerHTML);
 
+			var columnWidth = colum.width();
+
+			iframe.css("-webkit-transform","scale(" + (1 / columNum) + ")");
+
 			iframe.attr("src", candidates[k].url);  
 			iframe.attr("id", candidates[k].id);  
 
@@ -395,7 +399,7 @@ function initExhibition(theme) {
 
 	if (pageNo > 1) {
 		//show pagination
-		lis.each(appendTO($('<div class="pagination"><ul class="nav"></ul></div>')));
+		lis.each(appendTo($('<div class="pagination"><ul class="nav"></ul></div>')));
 	}
 
 	$('a[href="#exhibition"]').parent().fadeIn(1000);
@@ -415,7 +419,7 @@ function initExhibition(theme) {
 			btn_origin.attr("id", "btn_origin_" + id);
 			btn_info.attr("id", "btn_info_" + id);
 
-			$(this).after("<div align='center'><div class='btn-group'>" + 
+			$(this).after("<div align='center' style='margin-top: 2px'><div class='btn-group'>" + 
 				btn_vote.get(0).outerHTML + btn_origin.get(0).outerHTML +  btn_info.get(0).outerHTML + 
 				"</div></div>");
 		});
@@ -683,17 +687,20 @@ var g_theme = {}; 	//contains current theme data
 	      			'			<img src="' + d.imgUrl + '" alt="slide-' +  d.id + '">  '+
 	      			'		    </li>');	
 
-	      		$('#introduction .slides').append(slide);	      		
+	      		$('#introduction .slides').append(slide);
 
-		      	$('.slide-button').click(function(){
+	      		$('#btn-theme-'+ d.id).click(function(){
 		      		g_theme = d;
 
 		      		var themeId = $(this).attr("id").replace(/[^0-9]/ig, "");
 
 		      		$('#exhibition').show();
 
+					niceScrollInit();
+
 		      		if (d.candidates.length) {
 		      			initExhibition(d);
+		      			console.log(d.candidates);
 						initVoting(d.candidates);
 					}
 
@@ -701,8 +708,7 @@ var g_theme = {}; 	//contains current theme data
 					if ($.cookie('vote')) {
 			      		showResult(themeId);
 			      		showResultDetail(themeId);	
-		      		}
-
+		      		}   		
 		      	});
 	      	});
 
@@ -713,8 +719,7 @@ var g_theme = {}; 	//contains current theme data
 			initSuperFish();
 			initFlexSlider();
 			initLocalScroll();
-			initParallax();
-			niceScrollInit();
+			initParallax();			
 			toolTipInit();
 			isotopeInit();
 			initMagnificPopup();
