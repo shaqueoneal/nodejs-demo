@@ -68,6 +68,31 @@ var g_candidates = [
   },
 ];
 
+var g_candidates1 = [
+  {
+    id: 1,
+    name: "数据中心",
+    author: "zhaoshenglu",
+    url: "../images/dataCenter.jpg",
+    description: "",
+  },
+  {
+    id: 2,
+    name: "合作伙伴",
+    author: "zhaoshenglu",
+    url: "../images/partner-logo.png",
+    description: "",
+  },
+  {
+    id: 3,
+    name: "背景大图",
+    author: "zhaoshenglu",
+    url: "../images/large_bg_image.jpg",
+    description: "",
+  },
+];
+
+
 var themeObj = {
   id: 1,
   name: 'UIS首页',    
@@ -82,6 +107,19 @@ var themeObj = {
   candidates: g_candidates, 
 };
 
+var themeObj1 = {
+  id: 2,
+  name: '图片展示',    
+  begin: Date.now(),  
+  end: new Date(2015, 5, 30), //lasts 10 days 
+  votesPerUser: 1, 
+  maxUser: -1,  
+  maxVotes: -1, 
+  description: '都是图片',
+  imgUrl: "images/slides/slide2.jpg",
+  candidates: g_candidates1, 
+};
+
 Theme.set(themeObj, function(err, doc) {
   if (err) {
     console.log(err);
@@ -89,6 +127,12 @@ Theme.set(themeObj, function(err, doc) {
   }
 });
 
+Theme.set(themeObj1, function(err, doc) {
+  if (err) {
+    console.log(err);
+    return;
+  }
+});
 
 router.get('/user_vote', function(req, res, next) {
   var sess = req.session;
