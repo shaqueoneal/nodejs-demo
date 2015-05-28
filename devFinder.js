@@ -4,6 +4,7 @@ var snmp = require ("net-snmp");
 var childProcess = require('child_process');
 var fs = require('fs');
 var path = require('path');
+var ping = require('ping');
 
 /* find devices in net */
 var g_netAllDevs = [
@@ -215,22 +216,44 @@ function findDevInNet(netIp) {
 	netDev.bSearching = true;
 	console.log("searching net: " + netIp);	
 
-	// x.x.x.1~x.x.x.254
+	var hosts = [];
+
 	for (var i = 1; i < 255; i++) {
-		(function(i){
-			childProcess.exec('ping -w 1 ' +　(netIp.substring(0, netIp.length-1) + i), {timeout: 2000},
-			function (error, stdout, stderr) {
-				if (error) {
-					netDev.netDevStats[i - 1] = -1; 
-				}
-				else {
-					console.log(i);
-					netDev.netDevStats[i - 1] = 1;
-					console.log('Child Process STDOUT: '+ stdout);
-				}			
-			});
-		})(i);
+		hosts.push(netIp.substring(0, netIp.length-1) + i);
 	}
+
+	hosts.forEach(function(host){
+	    ping.sys.probe(host, function(isAlive) {
+	    	var hostIndex = host.replace(/^.*\./, '');
+	    	console.log(hostIndex + host);
+	    	if (isAlive) {
+	    		netDev.netDevStats[hostIndex - 1] = 1; 
+	    	}
+	    	else {
+	    		netDev.netDevStats[hostIndex - 1] = -1; 
+	    	}
+
+	        var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
+	        // console.log(msg);
+	    });
+	});
+
+	// x.x.x.1~x.x.x.254
+	// for (var i = 1; i < 255; i++) {
+	// 	(function(i){
+	// 		childProcess.exec('ping -w 1 ' +　(netIp.substring(0, netIp.length-1) + i), {timeout: 2000},
+	// 		function (error, stdout, stderr) {
+	// 			if (error) {
+	// 				netDev.netDevStats[i - 1] = -1; 
+	// 			}
+	// 			else {
+	// 				console.log(i);
+	// 				netDev.netDevStats[i - 1] = 1;
+	// 				console.log('Child Process STDOUT: '+ stdout);
+	// 			}			
+	// 		});
+	// 	})(i);
+	// }
 }
 
 function isNetPolled(netIp) {
