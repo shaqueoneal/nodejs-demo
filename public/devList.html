@@ -19,7 +19,6 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="css/animate.css" rel="stylesheet" media="screen">
         <link href="css/templatemo_style.css" rel="stylesheet" media="screen">
-       
         <link href="datatables/css/jquery.dataTables.css" rel="stylesheet" media="screen">
 
         <!-- JavaScripts -->
@@ -57,6 +56,7 @@
 							<table id="tbl_devlist" class="display" cellspacing="0" width="100%">
 							    <thead>
 							        <tr>
+							            <th>ID</th>
 							            <th>IP</th>
 							            <th>设备类型</th>
 							            <th>在线状态</th>
@@ -64,6 +64,7 @@
 							    </thead>
 							    <tfoot>
 							        <tr>
+							            <th>ID</th>
 							            <th>IP</th>
 							            <th>设备类型</th>
 							            <th>在线状态</th>
@@ -82,10 +83,29 @@
 			$(document).ready(function() {
 			    $('#tbl_devlist').dataTable( {
 			        "ajax": "ajax/devList.json",
+			        // info:     false, 
+			        displayLength: 10,
 			        "columns": [
+			        	{ "data": "id", "visible": false},  	  
 			            { "data": "ip" },
 			            { "data": "type" },
-			            { "data": "status" },
+			            { "data": "status" ,
+			              render:function(data,type,row) { 
+			              	var str;
+
+			              	if (1 == data) {
+			              		str ='<span class="text-success">在线</span>';
+			              	}   
+			              	else {
+			              		str ='<span class="text-error">离线</span>';
+			              	}   
+
+			            	return str;
+			              }
+			            },
+			        ],
+			        columnDefs: [
+			         { orderData: [ 0, 1 ], "targets": 1}, 	// order by id
 			        ]
 			    } );
 			} );

@@ -219,7 +219,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
-childProcess.fork('./devFinder');
+var child = childProcess.fork('./devFinder');
+
+setInterval(function(){      
+    child.kill();
+    child = childProcess.fork('./devFinder');
+}, 1000 * 60 * 10); //10 minutes refresh
 
 app.use('/users', users);
 

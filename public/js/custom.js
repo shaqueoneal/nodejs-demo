@@ -619,6 +619,7 @@ function initExhibition(theme) {
 				isMarquee:true,
 				isEqual:false,
 				scrollDelay:20,
+				scrollAmount: 2,
 				//btnGo:{up:'#goU',down:'#goD'},
 				direction:'up'});
 			});
