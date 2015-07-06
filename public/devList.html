@@ -80,34 +80,47 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript">
 			var socket = io.connect('http://UIS-SERVER2:3000');
+
 			$(document).ready(function() {
-			    $('#tbl_devlist').dataTable( {
-			        "ajax": "ajax/devList.json",
-			        // info:     false, 
-			        displayLength: 10,
-			        "columns": [
-			        	{ "data": "id", "visible": false},  	  
-			            { "data": "ip" },
-			            { "data": "type" },
-			            { "data": "status" ,
-			              render:function(data,type,row) { 
-			              	var str;
+				$.getJSON("ajax/devList.json", function(json){
+					var data = [];
+					$.each(json.data, function(i, d) {
+						if (d.type && ('Unknown' != d.type)) {
+							data.push(d);
+						}
+					});
 
-			              	if (1 == data) {
-			              		str ='<span class="text-success">在线</span>';
-			              	}   
-			              	else {
-			              		str ='<span class="text-error">离线</span>';
-			              	}   
+				    $('#tbl_devlist').dataTable( {
+				        // "ajax": "ajax/devList.json",
+				        // info:     false, 
+				        data : data,
+				        displayLength: 10,
+				        "columns": [
+				        	{ "data": "id", "visible": false},  	  
+				            { "data": "ip" },
+				            { "data": "type" },
+				            { "data": "link" ,
+				              render:function(data,type,row) { 
+				              	var str;
 
-			            	return str;
-			              }
-			            },
-			        ],
-			        columnDefs: [
-			         { orderData: [ 0, 1 ], "targets": 1}, 	// order by id
-			        ]
-			    } );
+				              	if (1 == data) {
+				              		str ='<span class="text-success">在线</span>';
+				              	}   
+				              	else {
+				              		str ='<span class="text-error">离线</span>';
+				              	}   
+
+				            	return str;
+				              }
+				            },
+				        ],
+				        columnDefs: [
+				         { orderData: [ 0, 1 ], "targets": 1}, 	// order by id
+				        ]
+				    } );
+
+				});
+
 			} );
 		</script>
     </body>
