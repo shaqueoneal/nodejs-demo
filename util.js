@@ -1,6 +1,8 @@
 var childProcess = require('child_process');
 var net = require('net');
+var request = require('request');
 
+/* 要求samba打开 */
 function getHostNameByIp(ip, cb) {
   var hostname = ip;
 
@@ -39,4 +41,27 @@ function getHostNameByIp(ip, cb) {
   }  
 }
 
+function sendJsonRequest(url, method, jsonData, timeout, cb) {
+  var options = {
+    headers: {"Connection": "close"},
+    url: url + "/uism/",
+    method: method,
+    json: true,
+    timeout: timeout, 
+    body: jsonData
+  };
+
+  request(options, function (error, response, body) {
+    if (cb) {
+      cb(body);
+    };
+  });
+}
+
+function addZero(str,length){        
+  return new Array(length - str.length + 1).join("0") + str;
+}
+
+exports.addZero = addZero;
 exports.getHostNameByIp = getHostNameByIp;
+exports.sendJsonRequest = sendJsonRequest;

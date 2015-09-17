@@ -104,7 +104,8 @@
 				              	var str;
 
 				              	if (1 == data) {
-				              		str ='<span class="text-success">在线</span>';
+				              		// str ='<span class="text-success">在线</span>';
+				              		str ='<span>在线</span>';
 				              	}   
 				              	else {
 				              		str ='<span class="text-error">离线</span>';
@@ -116,9 +117,14 @@
 				        ],
 				        columnDefs: [
 				         { orderData: [ 0, 1 ], "targets": 1}, 	// order by id
-				        ]
+				        ],
+						"rowCallback": function( row, data, index ) {
+						    if ( data['link'] == 1 ) {
+						      // $('td:eq(4)', row).html( '<b>A</b>' );
+						      $(row).css( {color: "green"} );
+						    }
+						  }
 				    } );
-
 				});
 
 			} );

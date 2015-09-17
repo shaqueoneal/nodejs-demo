@@ -1,3 +1,6 @@
+/* to use devFinder you need to expand arp table length:
+   	echo 8192 > /proc/sys/net/ipv4/neigh/default/gc_thresh3 
+ */
 
 var request = require('request');
 var snmp = require ("net-snmp");
@@ -146,6 +149,7 @@ function findDevInNet(netIp) {
 	for (var i = 1; i < 255; i++) {
 		(function(i){
 			childProcess.exec('ping -w 1 ' +　(netIp.substring(0, netIp.length-1) + i), {timeout: 2000},
+			// childProcess.spawnSync('ping -w 1 ' +　(netIp.substring(0, netIp.length-1) + i), {timeout: 2000},
 			function (error, stdout, stderr) {
 				if (error) {
 					netDev.netDevStats[i - 1] = -1; 
@@ -510,7 +514,7 @@ function testCas(host, cb) {
 function initDevFind() {
 	var file = path.join(__dirname, 'public/ajax/devList.json');
 
-	fs.readFile(file, function (err, json) {
+	fs.readFile(file, function (err, json) {		
 		if (err) {
 			initNetHost("192.168.1.0");
 			initNetHost("192.168.2.0");
@@ -571,7 +575,7 @@ function initDevFindParser(argument) {
 	    //   }
 	    // }
 	    callback();
-	}, 254);
+	}, 100);
 
 	// cargo.saturated = function() {
 	//     childProcess.exec('ip link set arp off eth0; ip link set arp on dev eth0' , function (error, stdout, stderr) {
@@ -586,8 +590,8 @@ function initDevFindParser(argument) {
 	cargo.empty = function() {
 	    //clear arp cache
 	    // childProcess.exec('ip link set arp off eth0; ip link set arp on dev eth0' , function (error, stdout, stderr) {
-	    childProcess.exec("arp -n|awk '/^[1-9]/{print \" arp -d \" $1}'|sh -x" , function (error, stdout, stderr) {
-	      	console.log("clear arp");
+	    // childProcess.exec("arp -n|awk '/^[1-9]/{print \" arp -d \" $1}'|sh -x" , function (error, stdout, stderr) {
+	    //   	console.log("clear arp");
 
 	      	g_netid++;
 
@@ -612,7 +616,7 @@ function initDevFindParser(argument) {
 	      	// 		testDevType(host);
 	      	// 	});
 	      	// });
-	    });
+	    // });
 	}
 
 	cargo.drain = function() {
@@ -657,5 +661,9 @@ function initDevFindParser(argument) {
 }
 
 initDevFind();
+
+setInterval(function(){      
+	initDevFind();
+}, 1000 * 60 * 10);
 
 exports.initDevFind = initDevFind;

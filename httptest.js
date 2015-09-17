@@ -23,11 +23,15 @@ function getDevTypeByHttp(string)
     }
     else if (string.indexOf("CVK") >= 0 ) {
         console.log("CAS-CVK");
-    }    
+    }
+    else {
+        console.log(string);
+    }   
 }
 
 request(options, function (error, response, body) {
   if (error) {
+    console.log(error);
     return;
   }
 

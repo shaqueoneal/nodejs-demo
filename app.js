@@ -219,12 +219,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
+// 因为有打开文件句柄(包括socket)1024限制，考虑一个网段fork一个
 var child = childProcess.fork('./devFinder');
 
-setInterval(function(){      
-    child.kill();
-    child = childProcess.fork('./devFinder');
-}, 1000 * 60 * 10); //10 minutes refresh
+// setInterval(function(){      
+//     child.kill();
+//     child = childProcess.fork('./devFinder');
+// }, 1000 * 60 * 20); //10 minutes refresh
 
 app.use('/users', users);
 
