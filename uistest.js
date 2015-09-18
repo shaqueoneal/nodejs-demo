@@ -1,12 +1,26 @@
 
 var util = require('./util');     // 必须加./
 var request = require('request');
+var async = require('async');
 
-//node uistest 172.15.15.254
-var g_url = process.argv.splice(2);
+//usage: node uistest http://172.15.15.254:7042 add 128 host
+
+if (process.argv.length < 6) {
+  console.log("usage: node uistest url {add|del} {num} {host|hostset} [to|from hostset {num}]");
+  console.log("eg: node uistest http://172.15.15.254:7042 add 128 host");
+  return; 
+}
+
+var g_url = process.argv[2];
+// console.log(process.argv);
+
+var op = {};
+op.type = process.argv[3];
+op.num = process.argv[4];
+op.target = process.argv[5];
+op.targetNum = process.argv[8];
+
 var g_session;
-
-// console.log(arguments);
 
 var jsonObj = {
   "module": "userm",
@@ -23,10 +37,33 @@ util.sendJsonRequest(g_url, "POST", jsonObj, 60000, function (data) {
 
   g_session = data.session_key;
 
-  // addHostTest(256)
-  // delHostTest(256)
-  // addHostSetTest(64)
-  delHostSetTest(64)
+  if (('add' == op.type) && ('host' == op.target)) {
+    if (op.targetNum > 0 && op.targetNum <= 64) {
+      addHostToHostSetTest(op.num, op.targetNum);
+    }
+    else {
+      addHostTest(op.num);
+    }
+  }
+  else if (('del' == op.type) && ('host' == op.target)) {
+    if (op.targetNum > 0 && op.targetNum <= 64) {
+      delHostFromHostSetTest(op.num, op.targetNum);
+    }
+    else {
+      delHostTest(op.num);
+    }
+  }
+  else if (('add' == op.type) && ('hostset' == op.target)) {
+    addHostSetTest(op.num);    
+  }
+  else if (('del' == op.type) && ('hostset' == op.target)) {
+    delHostSetTest(op.num);    
+  }
+  else {
+    console.log("usage: node uistest url {add|del} {num} {host|hostset} [to|from hostset {num}]");
+    console.log("eg: node uistest http://172.15.15.254:7042 add 128 host");
+  }
+
 });
 
 function addHostTest (num) {
@@ -103,48 +140,53 @@ function delHostSetTest (num) {
   }
 }
 
-// var options = {
-//     url: arguments[0],
-//     rejectUnauthorized: false,
-//     timeout: 2000,    
-//     followRedirect: false,
-// };
+var g_i = 0;
 
-// function getDevTypeByHttp(string)
-// {
-//     if (string.indexOf("iLO") >= 0 ) {
-//         console.log("iLO");
-//     }
-//     else if (string.indexOf("at OA") >= 0 ) {
-//         console.log("OA");
-//     }
-//     else if (string.indexOf("CVM") >= 0 ) {
-//         console.log("CAS-CVM");
-//     }
-//     else if (string.indexOf("CVK") >= 0 ) {
-//         console.log("CAS-CVK");
-//     }
-//     else {
-//         console.log(string);
-//     }   
-// }
+function addHostToHostSetTest(hostNum, hostSetNum) {
+  g_i = 0;
+  setInterval(function () {addHostToHost(hostNum, g_i); g_i++;}, 15000);
+}
 
-// request(options, function (error, response, body) {
-//   if (error) {
-//     console.log(error);
-//     return;
-//   }
+function addHostToHost(num, hostSetId) {
+  var jsonObj = {
+    "module": "host", 
+    "method": "host_attach",
+    "session_key": g_session,
+    "hostsetid": hostSetId + ""    
+  };
 
-//   if (response.headers) {
-//     var serverName = response.headers.server;
-//     getDevTypeByHttp(serverName);
-//   }
+  for (var i = 0; i < num; i++) {
+    jsonObj.id = i + "";
 
-//   if (!error && response.statusCode == 200) {   // iLO
-//     getDevTypeByHttp(body);
-//   }
+    console.log(jsonObj);
+    util.sendJsonRequest(g_url, "POST", jsonObj, 60000, function (data) {
+      console.log(data);
+    });
+  }
+}
 
-//   if (!error && response.statusCode == 302) {   // OA
-//     getDevTypeByHttp(body);
-//   }
-// });
+function delHostFromHostSetTest(hostNum, hostSetNum) {
+  // for (var i = 0; i < hostSetNum; i++) {
+  //   delHostFromHostSet(hostNum, i);
+  // }
+  g_i = 0;
+  setInterval(function() {delHostFromHostSet(hostNum, g_i); g_i++}, 15000);
+}
+
+function delHostFromHostSet(num, hostSetId) {
+  var jsonObj = {
+    "module": "host", 
+    "method": "host_detach",
+    "session_key": g_session,
+    "hostsetid": hostSetId + ""    
+  };
+
+  for (var i = 0; i < num; i++) {
+    jsonObj.id = i + "";
+
+    console.log(jsonObj);
+    util.sendJsonRequest(g_url, "POST", jsonObj, 60000, function (data) {
+      console.log(data);
+    });
+  }
+}
